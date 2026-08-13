@@ -1,13 +1,23 @@
-# 🚀 MKBL Otomotiv (mkbloto.com) - IT Sunucu & Canlıya Alma Rehberi (GitHub Entegre)
+# 🚀 MKBL Otomotiv (mkbloto.com) - IT Sunucu & Canlıya Alma Rehberi (Gizli GitHub & SSH Entegre)
 
-Bu belge, **MKBL Otomotiv Web Sitesi & Yönetim Paneli** uygulamasının GitHub deposu üzerinden canlı sunucuya (Linux VPS / Dedicated / cPanel) kurulumu, domain yönlendirmeleri, SSL sertifikası, SMTP e-posta yapılandırması ve gelecek güncelleme adımlarını içermektedir.
+Bu belge, **MKBL Otomotiv Web Sitesi & Yönetim Paneli** uygulamasının Private (Gizli) GitHub deposu üzerinden SSH Deploy Key ile canlı sunucuya (Linux VPS / Dedicated / cPanel) kurulumu, domain yönlendirmeleri, SSL sertifikası, SMTP e-posta yapılandırması ve otomatik güncelleme adımlarını içermektedir.
 
 ---
 
-## 📦 1. GitHub Deposu (CI/CD Workflow)
+## 🔒 1. Gizli GitHub Depo Erişimi (Private Repo & SSH Deploy Key)
 
 - **Resmi GitHub Depo Adresi**: `https://github.com/basaransosyal/mkbl-otomotiv.git`
+- **SSH Clone URL (Önerilen)**: `git@github.com:basaransosyal/mkbl-otomotiv.git`
 - **Ana Dal (Branch)**: `main`
+
+### 🔑 SSH Deploy Key Adımları (Kodların Kamuya Açılmadan Çekilmesi):
+1. IT ekibi sunucuda SSH anahtarı oluşturur:
+   ```bash
+   ssh-keygen -t ed25519 -C "mkbl-server-deploy"
+   cat ~/.ssh/id_ed25519.pub
+   ```
+2. Çıkan genel anahtarı (`ssh-ed25519 ...`) proje sahibine iletirler.
+3. Proje sahibi bu anahtarı GitHub reponun `Settings ➔ Deploy keys ➔ Add deploy key` kısmına ekler.
 
 ---
 
@@ -25,10 +35,10 @@ Site canlı domain adresi **`mkbloto.com`** olarak yapılandırılmıştır. IT 
 
 ## 🛠️ 3. Linux VPS (Ubuntu / Debian / AlmaLinux) Adım Adım Kurulum Kılavuzu
 
-### Adım 1: GitHub Depoundan Projeyi Çekme
+### Adım 1: Gizli GitHub Depoundan Projeyi Çekme
 ```bash
 cd /var/www
-git clone https://github.com/basaransosyal/mkbl-otomotiv.git mkbloto
+git clone git@github.com:basaransosyal/mkbl-otomotiv.git mkbloto
 cd mkbloto
 npm install --production=false
 ```
@@ -100,7 +110,7 @@ sudo certbot --nginx -d mkbloto.com -d www.mkbloto.com
 
 Müşterilerinizin Web Siteden (Servis Randevusu, Test Sürüşü ve Showroom İletişim Formları) gönderdiği maillerin kurumsal kutunuza (`info@mkbloto.com`) düşmesi için 2 yöntem bulunur:
 
-> 💡 **Admin Paneli Kolaylığı:** SMTP sunucu ayarlarını kod değiştirmeden doğrudan canlı sitenizin Admin Paneli ➔ **Site Ayarları ➔ E-Posta & Bildirim Ayarları** sekmesinden tek tıkla yapabilir ve **"E-Posta Gönderimini Test Et"** butonuyla maillerin ulaştığını anında canlıda test edebilirsiniz!
+> 💡 **Admin Paneli Kolaylığı:** SMTP sunucu ayarlarını koda dokunmadan doğrudan canlı sitenizin Admin Paneli ➔ **Site Ayarları ➔ E-Posta & Bildirim Ayarları** sekmesinden tek tıkla yapabilir ve **"E-Posta Gönderimini Test Et"** butonuyla maillerin ulaştığını anında canlıda test edebilirsiniz!
 
 | Mail Sunucu Seçeneği | SMTP Host | Port | Güvenlik |
 |---|---|---|---|
@@ -110,7 +120,7 @@ Müşterilerinizin Web Siteden (Servis Randevusu, Test Sürüşü ve Showroom İ
 
 ---
 
-## 🔄 5. Gelecekte Bir Güncelleme Yapıldığında IT Ekibinin Komutları
+## 🔄 5. Gelecekte Bir Güncelleme Yapıldığında IT Ekibinin Komutları (Aracısız)
 
 Yazılım ekibi GitHub deposuna yeni bir özellik veya düzeltme yüklediğinde (`git push`), IT ekibinizin sunucuda sadece şu komutları çalıştırması yeterlidir:
 

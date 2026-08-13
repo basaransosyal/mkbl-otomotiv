@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MKBL Otomotiv - Canlıya Alma & Sunucu Kurulum Rehberi (GitHub Entegre)</title>
+  <title>MKBL Otomotiv - IT Sunucu Kurulum & Canlıya Alma Rehberi (Private SSH Entegre)</title>
   <style>
     :root {
       --primary: #10b981;
@@ -109,9 +109,9 @@
     th { background: #090d16; color: #fff; }
     td { color: var(--text-muted); }
     .alert-box {
-      background: rgba(234, 179, 8, 0.1);
-      border: 1px solid rgba(234, 179, 8, 0.3);
-      color: #fde047;
+      background: rgba(16, 185, 129, 0.1);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      color: #34d399;
       padding: 14px;
       border-radius: 8px;
       font-size: 13px;
@@ -124,7 +124,6 @@
       p, ul, ol, td { color: #333; }
       pre, code { background: #f1f5f9; color: #0f172a; border: 1px solid #cbd5e1; }
       .btn-print { display: none; }
-      .alert-box { background: #fffbeeb; border: 1px solid #fde047; color: #854d0e; }
     }
   </style>
 </head>
@@ -133,20 +132,38 @@
     <header>
       <div>
         <h1>MKBL Otomotiv <span class="badge">IT SUNUCU & CANLIYA ALMA REHBERİ</span></h1>
-        <p style="margin: 4px 0 0 0;">GitHub Entegre Kurulum, Domain (mkbloto.com), Nginx SSL & E-Posta Ayarları</p>
+        <p style="margin: 4px 0 0 0;">Gizli GitHub Depo Erişimi (SSH Deploy Key), Domain (mkbloto.com) & SMTP Ayarları</p>
       </div>
       <button class="btn-print" onclick="window.print()">🖨️ Yazdır / PDF Olarak Kaydet</button>
     </header>
 
-    <!-- PROJE ÖZETİ VE GİTHUB DEPOSU -->
+    <!-- 1. GİZLİ GİTHUB DEPO ERİŞİMİ & SSH DEPLOY KEY -->
     <section>
-      <h2>1. GitHub Deposu & Yayınlama Mantığı (GitHub CI/CD)</h2>
+      <h2>1. Gizli GitHub Depo Erişimi (Private Repo & SSH Deploy Key)</h2>
       <p>
-        Projenin güncel kaynak kodları GitHub üzerinde barındırılmaktadır. Bu sayede yazılım ekibi bir güncelleme yaptığında sunucunuzda sadece <code>git pull</code> çalıştırarak 3 saniyede canlı siteyi güncelleyebilirsiniz.
+        Projenin kaynak kodları güvenlik amacıyla GitHub üzerinde <strong>Private (Gizli)</strong> depoda tutulmaktadır. Depo kamuya açılmadan sunucunun otomatik kod çekebilmesi için <strong>SSH Deploy Key (Önerilen)</strong> kullanılır:
       </p>
+
+      <div class="alert-box">
+        🔒 <strong>GÜVENLİK AVANTAJI:</strong> Bu yöntem sayesinde kodlarınız dış dünyaya %100 kapalı (Gizli) kalır. Sunucuya tanımlanan sadece okunabilir (Read-Only) SSH anahtarı ile tüm güncellemeler otomatik olarak sunucuya aktarılır.
+      </div>
+
       <div class="step-box">
-        <h4>📦 Resmi GitHub Depo Adresi:</h4>
-        <pre>https://github.com/basaransosyal/mkbl-otomotiv.git</pre>
+        <h4>Adım 1.1: GitHub Depo Adresleri</h4>
+        <ul>
+          <li><strong>HTTPS URL:</strong> <code>https://github.com/basaransosyal/mkbl-otomotiv.git</code></li>
+          <li><strong>SSH Clone URL (Önerilen):</strong> <code>git@github.com:basaransosyal/mkbl-otomotiv.git</code></li>
+        </ul>
+      </div>
+
+      <div class="step-box">
+        <h4>Adım 1.2: IT Ekibinin Sunucuda SSH Anahtarı Üretmesi</h4>
+        <p>IT ekibi Linux sunucuda şu komutla sunucuya özel okuma anahtarı oluşturur:</p>
+        <pre>
+ssh-keygen -t ed25519 -C "mkbl-server-deploy"
+cat ~/.ssh/id_ed25519.pub
+        </pre>
+        <p>Çıkan genel anahtarı (<code>ssh-ed25519 ...</code>) proje sahibine iletirler. Proje sahibi bu anahtarı GitHub reponun <code>Settings ➔ Deploy keys ➔ Add deploy key</code> kısmına ekler.</p>
       </div>
     </section>
 
@@ -193,10 +210,10 @@
       <h2>3. Linux Sunucu Adım Adım Kurulum Kılavuzu</h2>
       
       <div class="step-box">
-        <h4>Adım 3.1: GitHub Depoundan Projeyi Sunucuya Çekme</h4>
+        <h4>Adım 3.1: Gizli GitHub Depoundan Projeyi Çekme</h4>
         <pre>
 cd /var/www
-git clone https://github.com/basaransosyal/mkbl-otomotiv.git mkbloto
+git clone git@github.com:basaransosyal/mkbl-otomotiv.git mkbloto
 cd mkbloto
 npm install --production=false
         </pre>
@@ -275,7 +292,7 @@ sudo certbot --nginx -d mkbloto.com -d www.mkbloto.com
       </p>
 
       <div class="alert-box">
-        💡 <strong>ÖNEMLİ İPUCU (Yönetim Paneli Kolaylığı):</strong> SMTP sunucu ayarlarını kod değiştirmeden doğrudan canlı sitenizin Admin Paneli ➔ <strong>Site Ayarları ➔ E-Posta & Bildirim Ayarları</strong> sekmesinden tek tıkla yapabilir ve <strong>"E-Posta Gönderimini Test Et"</strong> butonuyla maillerin ulaştığını anında canlıda test edebilirsiniz!
+        💡 <strong>ÖNEMLİ İPUCU (Yönetim Paneli Kolaylığı):</strong> SMTP sunucu ayarlarını koda dokunmadan doğrudan canlı sitenizin Admin Paneli ➔ <strong>Site Ayarları ➔ E-Posta & Bildirim Ayarları</strong> sekmesinden tek tıkla yapabilir ve <strong>"E-Posta Gönderimini Test Et"</strong> butonuyla maillerin ulaştığını anında canlıda test edebilirsiniz!
       </div>
 
       <table>
@@ -314,9 +331,9 @@ sudo certbot --nginx -d mkbloto.com -d www.mkbloto.com
       </table>
     </section>
 
-    <!-- 5. YÖNETİCİ GİRİŞİ VE GÜNCELLEME PROSEDÜRÜ -->
+    <!-- 5. YÖNETİCİ GİRİŞİ VE OTOMATİK GÜNCELLEME PROSEDÜRÜ -->
     <section>
-      <h2>5. Canlı Admin Paneli & Gelecek Güncellemeleri Çekme Prosedürü</h2>
+      <h2>5. Canlı Admin Paneli & Aracısız Otomatik Güncelleme Prosedürü</h2>
       <ul>
         <li><strong>Canlı Admin Paneli URL:</strong> <code>https://mkbloto.com/admin</code></li>
         <li><strong>Varsayılan Kullanıcı Adı:</strong> <code>admin</code></li>
@@ -324,7 +341,7 @@ sudo certbot --nginx -d mkbloto.com -d www.mkbloto.com
       </ul>
 
       <div class="step-box" style="margin-top: 16px;">
-        <h4>🔄 Gelecekte Sitede Bir Güncelleme Yapıldığında IT Ekibinin Komutları:</h4>
+        <h4>🔄 Sitede Bir Güncelleme Yapıldığında IT Ekibinin Komutları (Aracısız & Otomatik):</h4>
         <pre>
 cd /var/www/mkbloto
 git pull origin main
