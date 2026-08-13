@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MKBL Otomotiv - Canlıya Alma & Sunucu Kurulum Rehberi</title>
+  <title>MKBL Otomotiv - Canlıya Alma & Sunucu Kurulum Rehberi (GitHub Entegre)</title>
   <style>
     :root {
       --primary: #10b981;
@@ -108,6 +108,15 @@
     th, td { border: 1px solid var(--border); padding: 10px 14px; text-align: left; }
     th { background: #090d16; color: #fff; }
     td { color: var(--text-muted); }
+    .alert-box {
+      background: rgba(234, 179, 8, 0.1);
+      border: 1px solid rgba(234, 179, 8, 0.3);
+      color: #fde047;
+      padding: 14px;
+      border-radius: 8px;
+      font-size: 13px;
+      margin-bottom: 16px;
+    }
     @media print {
       body { background: #fff; color: #000; padding: 0; }
       section { background: #fff; border: 1px solid #ccc; color: #000; }
@@ -115,6 +124,7 @@
       p, ul, ol, td { color: #333; }
       pre, code { background: #f1f5f9; color: #0f172a; border: 1px solid #cbd5e1; }
       .btn-print { display: none; }
+      .alert-box { background: #fffbeeb; border: 1px solid #fde047; color: #854d0e; }
     }
   </style>
 </head>
@@ -122,170 +132,206 @@
   <div class="container">
     <header>
       <div>
-        <h1>MKBL Otomotiv <span class="badge">CANLIYA ALMA REHBERİ</span></h1>
-        <p style="margin: 4px 0 0 0;">Hosting, VPS Sunucu, SMTP Mail & API Kurulum Adımları</p>
+        <h1>MKBL Otomotiv <span class="badge">IT SUNUCU & CANLIYA ALMA REHBERİ</span></h1>
+        <p style="margin: 4px 0 0 0;">GitHub Entegre Kurulum, Domain (mkbloto.com), Nginx SSL & E-Posta Ayarları</p>
       </div>
       <button class="btn-print" onclick="window.print()">🖨️ Yazdır / PDF Olarak Kaydet</button>
     </header>
 
-    <!-- 1. HAZIRLIK VE ENV AYARLARI -->
+    <!-- PROJE ÖZETİ VE GİTHUB DEPOSU -->
     <section>
-      <h2>1. Ortam Değişkenleri (.env) Yapılandırması</h2>
+      <h2>1. GitHub Deposu & Yayınlama Mantığı (GitHub CI/CD)</h2>
       <p>
-        Sunucuya canlıya almadan önce projenin kök dizininde bir <code>.env</code> dosyası oluşturulmalı ve canlı bilgiler tanımlanmalıdır:
+        Projenin güncel kaynak kodları GitHub üzerinde barındırılmaktadır. Bu sayede yazılım ekibi bir güncelleme yaptığında sunucunuzda sadece <code>git pull</code> çalıştırarak 3 saniyede canlı siteyi güncelleyebilirsiniz.
       </p>
-      <pre>
-# Veritabanı Bağlantısı (SQLite varsayılandır. PostgreSQL için postgresql://... yazılabilir)
-DATABASE_URL="file:./dev.db"
-
-# Admin Paneli Giriş Bilgileri (Canlıda güçlü şifre belirleyin)
-ADMIN_USERNAME="admin"
-ADMIN_PASSWORD="GüçlüŞifreniz2026!"
-
-# SMTP Kurumsal Mail Sunucu Ayarları (Form bildirimleri için)
-SMTP_HOST="mail.mkblotomotiv.com"
-SMTP_PORT="465"
-SMTP_USER="info@mkblotomotiv.com"
-SMTP_PASS="MailSifreniz2026!"
-SMTP_SENDER="MKBL Otomotiv &lt;info@mkblotomotiv.com&gt;"
-SMTP_ENABLE_SSL="true"
-
-# Dış API Anahtarları (Opsiyonel - Admin Panelinden de girilebilir)
-COLLECT_API_KEY="apikey sizin_collectapi_anahtariniz"
-EPIAS_USERNAME="mkblsosyal@gmail.com"
-EPIAS_PASSWORD="Basaran+2026"
-EPIAS_API_KEY=""
-      </pre>
-    </section>
-
-    <!-- 2. HOSTING & VPS KURULUM SEÇENEKLERİ -->
-    <section>
-      <h2>2. Sunucu & Hosting Kurulum Seçenekleri</h2>
-      
       <div class="step-box">
-        <h4>A. Vercel veya Netlify İle Kurulum (En Kolay & Ücretsiz SSL)</h4>
-        <ol>
-          <li>Projeyi GitHub / GitLab deponuza yükleyin.</li>
-          <li><a href="https://vercel.com" target="_blank" style="color: #38bdf8;">Vercel.com</a> paneline girip <strong>"New Project"</strong> deyin.</li>
-          <li>Yukarıdaki <code>.env</code> değişkenlerini Vercel Environment Variables kısmına ekleyin.</li>
-          <li><strong>Deploy</strong> butonuna basın. Otomatik SSL ve CDN ile 1 dakikada canlıya alınır.</li>
-        </ol>
-      </div>
-
-      <div class="step-box">
-        <h4>B. Ubuntu / Linux VPS (DigitalOcean, AWS, Hetzner) İle Kurulum</h4>
-        <ol>
-          <li><strong>Node.js 18+ & PM2 Kurulumu:</strong>
-            <pre>
-curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
-sudo apt-get install -y nodejs
-sudo npm install -g pm2
-            </pre>
-          </li>
-          <li><strong>Projenin Çekilmesi & Derlenmesi:</strong>
-            <pre>
-git clone https://github.com/kullanici/mkbl-otomotiv.git
-cd mkbl-otomotiv
-npm install
-npx prisma db push
-npm run build
-            </pre>
-          </li>
-          <li><strong>PM2 İle Arka Planda Başlatma:</strong>
-            <pre>
-pm2 start npm --name "mkbl-web" -- start
-pm2 save
-pm2 startup
-            </pre>
-          </li>
-          <li><strong>Nginx Proxy & Certbot SSL Kurulumu:</strong>
-            <pre>
-sudo apt install nginx certbot python3-certbot-nginx
-# Nginx konfigürasyonunda location / { proxy_pass http://localhost:3000; } ayarlayın
-sudo certbot --nginx -d mkblotomotiv.com
-            </pre>
-          </li>
-        </ol>
-      </div>
-
-      <div class="step-box">
-        <h4>C. cPanel / Plesk Node.js Hosting İle Kurulum</h4>
-        <ol>
-          <li>cPanel'de <strong>"Setup Node.js App"</strong> menüsüne girin.</li>
-          <li>Node.js Sürümünü <strong>18.x veya 20.x</strong> seçin. App Root klasörünü belirleyin.</li>
-          <li>Dosyaları cPanel File Manager ile yükleyin (<code>node_modules</code> ve <code>.next</code> hariç).</li>
-          <li>cPanel Terminal'den <code>npm install</code>, <code>npx prisma db push</code> ve <code>npm run build</code> komutlarını çalıştırın.</li>
-          <li><strong>Restart Application</strong> butonuna basarak uygulamayı başlatın.</li>
-        </ol>
+        <h4>📦 Resmi GitHub Depo Adresi:</h4>
+        <pre>https://github.com/basaransosyal/mkbl-otomotiv.git</pre>
       </div>
     </section>
 
-    <!-- 3. MAIL SUNUCUSU AYARLARI -->
+    <!-- 2. DOMAIN VE SUNUCU TANIMLARI -->
     <section>
-      <h2>3. Kurumsal E-Posta (SMTP Mail Sunucusu) Ayarları</h2>
+      <h2>2. Domain & DNS Yönlendirmeleri (mkbloto.com)</h2>
       <p>
-        İletişim, online servis randevusu ve test sürüşü formlarının e-posta bildirimi olarak gelmesi için SMTP ayarlarının yapılması gereklidir:
+        Site canlı domain adı <strong>mkbloto.com</strong> olarak yapılandırılmıştır. IT ekibinin yapacağı DNS A-Kayıtları:
       </p>
       <table>
         <thead>
           <tr>
-            <th>Sağlayıcı</th>
-            <th>SMTP Host</th>
-            <th>Port</th>
-            <th>Güvenlik</th>
-            <th>Notlar</th>
+            <th>Kayıt Tipi (Type)</th>
+            <th>Ad / Host</th>
+            <th>Değer / Hedef (Value)</th>
+            <th>Açıklama</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td><strong>cPanel Kurumsal Mail</strong></td>
-            <td><code>mail.domaininiz.com</code></td>
-            <td><code>465</code></td>
-            <td>SSL / TLS (Active)</td>
-            <td>Hosting firmanızın verdiği e-posta şifresini kullanın.</td>
+            <td><code>A Kaydı</code></td>
+            <td><code>@ (mkbloto.com)</code></td>
+            <td><code>SUNUCU_IP_ADRESINIZ</code></td>
+            <td>Sunucunuzun Statik IP adresi</td>
+          </tr>
+          <tr>
+            <td><code>CNAME</code></td>
+            <td><code>www</code></td>
+            <td><code>mkbloto.com</code></td>
+            <td>WWW yönlendirmesi</td>
+          </tr>
+          <tr>
+            <td><code>MX Kaydı</code></td>
+            <td><code>@</code></td>
+            <td><code>mail.mkbloto.com</code></td>
+            <td>Kurumsal E-posta sunucu kaydı</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- 3. LINUX VPS / NGINX / PM2 ADIM ADIM KURULUM -->
+    <section>
+      <h2>3. Linux Sunucu Adım Adım Kurulum Kılavuzu</h2>
+      
+      <div class="step-box">
+        <h4>Adım 3.1: GitHub Depoundan Projeyi Sunucuya Çekme</h4>
+        <pre>
+cd /var/www
+git clone https://github.com/basaransosyal/mkbl-otomotiv.git mkbloto
+cd mkbloto
+npm install --production=false
+        </pre>
+      </div>
+
+      <div class="step-box">
+        <h4>Adım 3.2: Ortam Değişkenleri (.env) Dosyasını Oluşturma</h4>
+        <p>Proje kök dizininde <code>.env</code> dosyasını oluşturun ve kaydedin:</p>
+        <pre>
+# Canlı Domain URL
+NEXT_PUBLIC_SITE_URL=https://mkbloto.com
+
+# Veritabanı Bağlantısı (SQLite varsayılandır)
+DATABASE_URL="file:./dev.db"
+
+# SMTP E-Posta Bildirim Ayarları (Formların maile düşmesi için)
+SMTP_HOST="mail.mkbloto.com"
+SMTP_PORT="587"
+SMTP_USER="info@mkbloto.com"
+SMTP_PASS="MailSifreniz2026!"
+SMTP_SENDER="info@mkbloto.com"
+SMTP_ENABLE_SSL="true"
+        </pre>
+      </div>
+
+      <div class="step-box">
+        <h4>Adım 3.3: Veritabanını Oluşturma & Üretim Derlemesi (Build)</h4>
+        <pre>
+# SQLite veritabanı tablolarını ve seed verilerini yükler
+npx prisma db push
+
+# Next.js canlı üretim derlemesini basar
+npm run build
+        </pre>
+      </div>
+
+      <div class="step-box">
+        <h4>Adım 3.4: PM2 Process Manager İle Servisi Başlatma</h4>
+        <pre>
+pm2 start npm --name "mkbl-web" -- start -- -p 3000
+pm2 save
+pm2 startup
+        </pre>
+      </div>
+
+      <div class="step-box">
+        <h4>Adım 3.5: Nginx Reverse Proxy & Certbot SSL Kurulumu</h4>
+        <pre>
+# /etc/nginx/sites-available/mkbloto.com dosyası oluşturun:
+server {
+    server_name mkbloto.com www.mkbloto.com;
+
+    location / {
+        proxy_pass http://localhost:3000;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host $host;
+        proxy_cache_bypass $http_upgrade;
+    }
+}
+
+# Nginx aktif edip Ücretsiz Let's Encrypt SSL sertifikasını yükleyin:
+sudo ln -s /etc/nginx/sites-available/mkbloto.com /etc/nginx/sites-enabled/
+sudo nginx -t && sudo systemctl reload nginx
+sudo certbot --nginx -d mkbloto.com -d www.mkbloto.com
+        </pre>
+      </div>
+    </section>
+
+    <!-- 4. E-MAİL / SMTP KURUMSAL MAIL SUNUCUSU AYARLARI -->
+    <section>
+      <h2>4. E-Posta (SMTP) Ayarları & Canlı Panel Yapılandırması</h2>
+      <p>
+        Müşterilerinizin Web Siteden (Servis Randevusu, Test Sürüşü ve Showroom İletişim Formları) gönderdiği maillerin kurumsal kutunuza (<code>info@mkbloto.com</code>) düşmesi için 2 yöntem bulunur:
+      </p>
+
+      <div class="alert-box">
+        💡 <strong>ÖNEMLİ İPUCU (Yönetim Paneli Kolaylığı):</strong> SMTP sunucu ayarlarını kod değiştirmeden doğrudan canlı sitenizin Admin Paneli ➔ <strong>Site Ayarları ➔ E-Posta & Bildirim Ayarları</strong> sekmesinden tek tıkla yapabilir ve <strong>"E-Posta Gönderimini Test Et"</strong> butonuyla maillerin ulaştığını anında canlıda test edebilirsiniz!
+      </div>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Mail Sunucu Seçeneği</th>
+            <th>SMTP Host</th>
+            <th>Port</th>
+            <th>Güvenlik</th>
+            <th>Yapılandırma Adımı</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Kurumsal cPanel Mail</strong></td>
+            <td><code>mail.mkbloto.com</code></td>
+            <td><code>465</code> veya <code>587</code></td>
+            <td>SSL / TLS</td>
+            <td>Sunucunuzdaki cPanel e-posta hesabınızın şifresini yazın.</td>
           </tr>
           <tr>
             <td><strong>Yandex Kurumsal Mail</strong></td>
             <td><code>smtp.yandex.com</code></td>
             <td><code>465</code></td>
-            <td>SSL (Active)</td>
-            <td>Yandex Hesap Ayarları'ndan "Uygulama Şifresi" üretin.</td>
+            <td>SSL</td>
+            <td>Yandex Güvenlik menüsünden "Uygulama Şifresi" üretip girin.</td>
           </tr>
           <tr>
-            <td><strong>Gmail (Google Workspace)</strong></td>
+            <td><strong>Google Workspace / Gmail</strong></td>
             <td><code>smtp.gmail.com</code></td>
-            <td><code>587</code> veya <code>465</code></td>
-            <td>STARTTLS / SSL</td>
-            <td>2 Adımlı Doğrulama açıp "Uygulama Şifresi" alın.</td>
+            <td><code>587</code></td>
+            <td>STARTTLS</td>
+            <td>Google Hesabında 2FA açıp "Uygulama Şifresi" tanımlayın.</td>
           </tr>
         </tbody>
       </table>
-      <p>
-        SMTP ayarlarını Admin Paneli ➔ <strong>Site Ayarları ➔ Genel Bilgiler</strong> sekmesinden veya <code>.env</code> dosyasından istediğiniz zaman değiştirebilirsiniz.
-      </p>
     </section>
 
-    <!-- 4. CANLI VERİ API KURULUMU VE TESTİ -->
+    <!-- 5. YÖNETİCİ GİRİŞİ VE GÜNCELLEME PROSEDÜRÜ -->
     <section>
-      <h2>4. EPİAŞ & CollectAPI Canlı Veri Aktivasyon Adımları</h2>
-      <ol>
-        <li>Admin paneline giriş yapın: <code>http://domaininiz.com/admin</code></li>
-        <li><strong>Site Ayarları ➔ Tasarruf Hesaplayıcı</strong> sekmesine geçin.</li>
-        <li><strong>CollectAPI Benzin Fiyatı:</strong> <a href="https://collectapi.com" target="_blank" style="color:#38bdf8;">CollectAPI.com</a> adresinden ücretsiz veya paket API key alıp yapıştırın ve switch'i <strong>ON (Aktif)</strong> konuma getirin.</li>
-        <li><strong>EPİAŞ Elektrik Fiyatı:</strong> EPİAŞ Şeffaflık Portalı Kullanıcı Adı, Şifre veya API Key bilginizi girip switch'i <strong>ON (Aktif)</strong> konuma getirin.</li>
-        <li>Üstteki <strong>"⚡ Veri Akışını Test Et"</strong> butonuna basarak yeşil ışığın <code>🟢 VERİ AKIŞI AKTİF</code> yandığını doğrulayın.</li>
-      </ol>
-    </section>
-
-    <!-- 5. KONTROL VE BAKIM -->
-    <section>
-      <h2>5. Yayın Sonrası Kontrol Listesi (Checklist)</h2>
+      <h2>5. Canlı Admin Paneli & Gelecek Güncellemeleri Çekme Prosedürü</h2>
       <ul>
-        <li>✅ Sitede SSL (HTTPS) sertifikasının aktif olduğunu doğrulayın.</li>
-        <li>✅ Test sürüşü ve servis formunu doldurup SMTP e-postanın ulaştığını kontrol edin.</li>
-        <li>✅ Admin paneli şifresini canlı ortamda güçlü bir şifre ile değiştirin.</li>
-        <li>✅ Tasarruf hesaplayıcısında canlı piyasa verilerinin doğrulandığını görün.</li>
+        <li><strong>Canlı Admin Paneli URL:</strong> <code>https://mkbloto.com/admin</code></li>
+        <li><strong>Varsayılan Kullanıcı Adı:</strong> <code>admin</code></li>
+        <li><strong>Varsayılan Şifre:</strong> <code>mkbl2026</code></li>
       </ul>
+
+      <div class="step-box" style="margin-top: 16px;">
+        <h4>🔄 Gelecekte Sitede Bir Güncelleme Yapıldığında IT Ekibinin Komutları:</h4>
+        <pre>
+cd /var/www/mkbloto
+git pull origin main
+npm run build
+pm2 restart mkbl-web
+        </pre>
+      </div>
     </section>
   </div>
 </body>

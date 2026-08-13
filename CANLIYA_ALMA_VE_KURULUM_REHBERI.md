@@ -1,41 +1,44 @@
-# 🚀 MKBL Otomotiv (mkbloto.com) - Sunucu Kurulum & Canlıya Alma Rehberi
+# 🚀 MKBL Otomotiv (mkbloto.com) - IT Sunucu & Canlıya Alma Rehberi (GitHub Entegre)
 
-Bu belge, **MKBL Otomotiv Web Sitesi & Yönetim Paneli** uygulamasının canlı sunucuya (Linux VPS / Dedicated / cPanel / Plesk) kurulumu, veritabanı ilklendirmesi, SSL tanımı ve PM2 / Nginx yayınlama adımlarını içermektedir.
-
----
-
-## 📋 1. Sunucu Gereksinimleri
-
-- **Node.js**: `v18.x` veya `v20.x LTS` (Önerilen: Node v20+)
-- **Paket Yöneticisi**: `npm` v9+ veya `yarn` / `pnpm`
-- **Veritabanı**: SQLite (Varsayılan entegre, ek DB kurulumu gerektirmez) veya PostgreSQL / MySQL
-- **Web Sunucusu**: Nginx (Reverse Proxy) veya cPanel / Plesk Node.js Passenger
-- **Process Manager**: PM2 (`npm install -g pm2`)
-- **Domain**: `mkbloto.com` (A kaydı sunucu IP adresine yönlendirilmiş)
+Bu belge, **MKBL Otomotiv Web Sitesi & Yönetim Paneli** uygulamasının GitHub deposu üzerinden canlı sunucuya (Linux VPS / Dedicated / cPanel) kurulumu, domain yönlendirmeleri, SSL sertifikası, SMTP e-posta yapılandırması ve gelecek güncelleme adımlarını içermektedir.
 
 ---
 
-## 🛠️ 2. Linux (Ubuntu / Debian / AlmaLinux) VPS Kurulum Adımları
+## 📦 1. GitHub Deposu (CI/CD Workflow)
 
-### Adım 1: Proje Dosyalarını Sunucuya Aktarma
+- **Resmi GitHub Depo Adresi**: `https://github.com/basaransosyal/mkbl-otomotiv.git`
+- **Ana Dal (Branch)**: `main`
+
+---
+
+## 🌐 2. Domain & DNS Yönlendirmeleri (`mkbloto.com`)
+
+Site canlı domain adresi **`mkbloto.com`** olarak yapılandırılmıştır. IT ekibinin yapacağı DNS A-Kayıtları:
+
+| Kayıt Tipi (Type) | Ad / Host | Değer / Hedef (Value) | Açıklama |
+|---|---|---|---|
+| `A Kaydı` | `@ (mkbloto.com)` | `SUNUCU_IP_ADRESINIZ` | Sunucunuzun Statik IP adresi |
+| `CNAME` | `www` | `mkbloto.com` | WWW yönlendirmesi |
+| `MX Kaydı` | `@` | `mail.mkbloto.com` | Kurumsal E-posta sunucu kaydı |
+
+---
+
+## 🛠️ 3. Linux VPS (Ubuntu / Debian / AlmaLinux) Adım Adım Kurulum Kılavuzu
+
+### Adım 1: GitHub Depoundan Projeyi Çekme
 ```bash
 cd /var/www
-git clone https://github.com/your-repo/mkbl-otomotiv.git mkbloto
-# veya FTP/SFTP ile proje dosyalarını /var/www/mkbloto dizinine yükleyin
-cd /var/www/mkbloto
-```
-
-### Adım 2: Bağımlılıkları Yükleme
-```bash
+git clone https://github.com/basaransosyal/mkbl-otomotiv.git mkbloto
+cd mkbloto
 npm install --production=false
 ```
 
-### Adım 3: Ortam Değişkenlerini (.env) Yapılandırma
+### Adım 2: Ortam Değişkenleri (.env) Yapılandırma
 Proje kök dizininde `.env` dosyasını oluşturun:
 ```bash
 nano .env
 ```
-Aşağıdaki değişkenleri ekleyin ve kaydedin:
+Aşağıdaki değişkenleri ekleyip kaydedin:
 ```env
 # Canlı Domain URL
 NEXT_PUBLIC_SITE_URL=https://mkbloto.com
@@ -43,47 +46,33 @@ NEXT_PUBLIC_SITE_URL=https://mkbloto.com
 # SQLite Veritabanı Dosya Yolu
 DATABASE_URL="file:./dev.db"
 
-# SMTP E-posta Bildirim Ayarları (Opsiyonel - Admin Panelinden de Düzenlenebilir)
+# SMTP E-posta Bildirim Ayarları (Formların Maile Düşmesi İçin)
 SMTP_HOST="mail.mkbloto.com"
-SMTP_PORT=587
-SMTP_USER="bildirim@mkbloto.com"
-SMTP_PASS="GüçlüSifreniz123!"
-SMTP_SENDER="bildirim@mkbloto.com"
+SMTP_PORT="587"
+SMTP_USER="info@mkbloto.com"
+SMTP_PASS="MailSifreniz2026!"
+SMTP_SENDER="info@mkbloto.com"
+SMTP_ENABLE_SSL="true"
 ```
 
-### Adım 4: Veritabanı Oluşturma ve Seed (Varsayılan Verileri Yükleme)
+### Adım 3: Veritabanı Oluşturma ve Production Build
 ```bash
-# SQLite tablosunu oluşturur ve günceller
+# Veritabanı tablolarını ve seed verilerini işler
 npx prisma db push
 
-# Varsayılan site ayarlarını, admin hesabını ve araçları veritabanına işler
-npx prisma db seed
-```
-
-### Adım 5: Production Build (Üretim Derlemesi)
-```bash
+# Üretim derlemesini tamamlar
 npm run build
 ```
 
-### Adım 6: PM2 ile Uygulamayı Başlatma
+### Adım 4: PM2 Process Manager İle Servisi Başlatma
 ```bash
-# PM2 servisini başlatma
 pm2 start npm --name "mkbl-web" -- start -- -p 3000
-
-# Sunucu yeniden başladığında otomatik çalışması için kaydetme
 pm2 save
 pm2 startup
 ```
 
----
-
-## 🌐 3. Nginx Reverse Proxy & SSL (Let's Encrypt) Kurulumu
-
-### Adım 1: Nginx Konfigürasyonu Dosyası Oluşturma
-```bash
-sudo nano /etc/nginx/sites-available/mkbloto.com
-```
-Aşağıdaki Nginx bloğunu yapıştırın:
+### Adım 5: Nginx Reverse Proxy & Certbot SSL Kurulumu
+`/etc/nginx/sites-available/mkbloto.com` dosyası oluşturun:
 ```nginx
 server {
     server_name mkbloto.com www.mkbloto.com;
@@ -94,60 +83,51 @@ server {
         proxy_set_header Upgrade $http_upgrade;
         proxy_set_header Connection 'upgrade';
         proxy_set_header Host $host;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto $scheme;
         proxy_cache_bypass $http_upgrade;
     }
 }
 ```
-
+Aktifleştirip Ücretsiz Let's Encrypt SSL sertifikasını yükleyin:
 ```bash
-# Ayarı aktif etme ve Nginx'i test etme
 sudo ln -s /etc/nginx/sites-available/mkbloto.com /etc/nginx/sites-enabled/
-sudo nginx -t
-sudo systemctl reload nginx
-```
-
-### Adım 2: Ücretsiz Let's Encrypt SSL Sertifikası Yükleme
-```bash
-sudo apt install certbot python3-certbot-nginx -y
+sudo nginx -t && sudo systemctl reload nginx
 sudo certbot --nginx -d mkbloto.com -d www.mkbloto.com
 ```
 
 ---
 
-## ⚙️ 4. cPanel / Plesk Node.js Selector Kurulumu
+## 📧 4. E-Posta (SMTP) Ayarları & Canlı Panel Yapılandırması
 
-Eğer cPanel veya Plesk kullanıyorsanız:
-1. cPanel ekranından **Setup Node.js App** simgesine tıklayın.
-2. **Create Application** butonuna basın.
-3. Node.js Version: `20.x` veya `18.x` seçin.
-4. Application Mode: `Production` yapın.
-5. Application Root: `mkbloto` (proje klasörü)
-6. Application URL: `mkbloto.com`
-7. Application startup file: `node_modules/next/dist/bin/next` veya `server.js`
-8. **Run NPM Install** ve `npx prisma db push` komutlarını cPanel terminalinden çalıştırın.
+Müşterilerinizin Web Siteden (Servis Randevusu, Test Sürüşü ve Showroom İletişim Formları) gönderdiği maillerin kurumsal kutunuza (`info@mkbloto.com`) düşmesi için 2 yöntem bulunur:
+
+> 💡 **Admin Paneli Kolaylığı:** SMTP sunucu ayarlarını kod değiştirmeden doğrudan canlı sitenizin Admin Paneli ➔ **Site Ayarları ➔ E-Posta & Bildirim Ayarları** sekmesinden tek tıkla yapabilir ve **"E-Posta Gönderimini Test Et"** butonuyla maillerin ulaştığını anında canlıda test edebilirsiniz!
+
+| Mail Sunucu Seçeneği | SMTP Host | Port | Güvenlik |
+|---|---|---|---|
+| **Kurumsal cPanel Mail** | `mail.mkbloto.com` | `465` veya `587` | SSL / TLS |
+| **Yandex Kurumsal Mail** | `smtp.yandex.com` | `465` | SSL |
+| **Google Workspace / Gmail** | `smtp.gmail.com` | `587` | STARTTLS |
 
 ---
 
-## 🔐 5. Yönetici (Admin) Giriş Bilgileri
+## 🔄 5. Gelecekte Bir Güncelleme Yapıldığında IT Ekibinin Komutları
+
+Yazılım ekibi GitHub deposuna yeni bir özellik veya düzeltme yüklediğinde (`git push`), IT ekibinizin sunucuda sadece şu komutları çalıştırması yeterlidir:
+
+```bash
+cd /var/www/mkbloto
+git pull origin main
+npm run build
+pm2 restart mkbl-web
+```
+
+---
+
+## 🔐 6. Yönetici Giriş Bilgileri
 
 - **Admin Panel URL**: `https://mkbloto.com/admin`
-- **Varsayılan Kullanıcı Adı**: `admin`
-- **Varsayılan Şifre**: `mkbl2026`
-
-> **Güvenlik Notu:** Canlıya alındıktan sonra Admin Paneli > **Kullanıcı Yönetimi** ekranından yönetici şifrenizi değiştirmeniz önerilir.
-
----
-
-## 🚀 6. SEO & Performans Kontrol Listesi
-
-- [x] **Canonical & Domain**: `NEXT_PUBLIC_SITE_URL=https://mkbloto.com` ayarlandı.
-- [x] **Sitemap.xml**: `https://mkbloto.com/sitemap.xml` dinamik olarak tüm araçları ve sayfaları içerir.
-- [x] **Robots.txt**: `https://mkbloto.com/robots.txt` Google botlarına `/admin` hariç tüm siteyi açar.
-- [x] **Schema.org**: `AutoDealer` & `Product` / `Car` JSON-LD zengin sonuç yapısal verileri entegre edildi.
-- [x] **Security Headers**: `X-Frame-Options`, `X-Content-Type-Options`, `HSTS` güvenlik başlıkları aktiftir.
+- **Kullanıcı Adı**: `admin`
+- **Şifre**: `mkbl2026`
 
 ---
 
