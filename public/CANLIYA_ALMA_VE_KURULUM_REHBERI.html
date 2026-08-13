@@ -3,18 +3,19 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MKBL Otomotiv - IT Sunucu Kurulum & Canlıya Alma Rehberi (Private SSH Entegre)</title>
+  <title>MKBL Otomotiv - IT Sunucu Kurulum & Canlıya Alma Rehberi</title>
   <style>
     :root {
-      --primary: #10b981;
-      --primary-dark: #059669;
-      --bg: #0f172a;
-      --card-bg: #1e293b;
-      --text: #f8fafc;
-      --text-muted: #94a3b8;
-      --accent: #34d399;
-      --border: #334155;
-      --code-bg: #090d16;
+      --primary: #0284c7;
+      --primary-dark: #0369a1;
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --text: #0f172a;
+      --text-muted: #334155;
+      --accent: #0284c7;
+      --border: #cbd5e1;
+      --code-bg: #0f172a;
+      --code-text: #38bdf8;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
@@ -24,22 +25,22 @@
       line-height: 1.6;
       padding: 40px 20px;
     }
-    .container { max-width: 1000px; margin: 0 auto; }
+    .container { max-width: 900px; margin: 0 auto; }
     header {
       border-bottom: 2px solid var(--border);
-      padding-bottom: 24px;
-      margin-bottom: 40px;
+      padding-bottom: 20px;
+      margin-bottom: 32px;
       display: flex;
       justify-content: space-between;
       align-items: center;
       flex-wrap: wrap;
       gap: 16px;
     }
-    h1 { font-size: 26px; color: #fff; }
+    h1 { font-size: 24px; color: #0f172a; font-weight: 800; }
     .badge {
-      background: rgba(16, 185, 129, 0.1);
-      color: var(--accent);
-      border: 1px solid rgba(16, 185, 129, 0.3);
+      background: #e0f2fe;
+      color: #0369a1;
+      border: 1px solid #bae6fd;
       padding: 4px 12px;
       border-radius: 9999px;
       font-size: 12px;
@@ -62,68 +63,81 @@
     section {
       background: var(--card-bg);
       border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 32px;
-      margin-bottom: 32px;
+      border-radius: 12px;
+      padding: 28px;
+      margin-bottom: 28px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
     }
     h2 {
-      font-size: 20px;
-      color: var(--accent);
-      margin-bottom: 16px;
-      border-bottom: 1px solid var(--border);
+      font-size: 18px;
+      color: #0369a1;
+      margin-bottom: 14px;
+      border-bottom: 2px solid #e2e8f0;
       padding-bottom: 8px;
+      font-weight: 700;
     }
-    h3 { font-size: 16px; color: #fff; margin: 20px 0 10px 0; }
-    p { color: var(--text-muted); margin-bottom: 16px; font-size: 14px; }
-    ul, ol { margin-left: 20px; color: var(--text-muted); font-size: 14px; margin-bottom: 16px; }
-    li { margin-bottom: 8px; }
+    h3 { font-size: 15px; color: #0f172a; margin: 16px 0 8px 0; font-weight: 700; }
+    p { color: var(--text-muted); margin-bottom: 14px; font-size: 13.5px; font-weight: 500; }
+    ul, ol { margin-left: 20px; color: var(--text-muted); font-size: 13.5px; margin-bottom: 14px; font-weight: 500; }
+    li { margin-bottom: 6px; }
     code {
-      background: var(--code-bg);
-      color: #38bdf8;
-      padding: 2px 6px;
-      border-radius: 4px;
-      font-family: monospace;
+      background: #f1f5f9;
+      color: #0284c7;
+      padding: 3px 8px;
+      border-radius: 6px;
+      font-family: SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
       font-size: 13px;
+      font-weight: 600;
+      border: 1px solid #cbd5e1;
     }
     pre {
-      background: var(--code-bg);
-      border: 1px solid var(--border);
+      background: #0f172a;
+      border: 1px solid #1e293b;
       border-radius: 8px;
       padding: 16px;
       overflow-x: auto;
-      color: #e2e8f0;
-      font-family: monospace;
+      color: #f8fafc;
+      font-family: SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
       font-size: 13px;
-      margin-bottom: 16px;
+      margin-bottom: 14px;
+      line-height: 1.5;
     }
     .step-box {
-      background: #090d16;
+      background: #f8fafc;
       border-left: 4px solid var(--primary);
-      padding: 16px;
+      border-top: 1px solid #e2e8f0;
+      border-right: 1px solid #e2e8f0;
+      border-bottom: 1px solid #e2e8f0;
+      padding: 16px 20px;
       border-radius: 0 8px 8px 0;
       margin-bottom: 16px;
     }
-    .step-box h4 { color: #fff; margin-bottom: 6px; }
-    table { width: 100%; border-collapse: collapse; margin-bottom: 16px; font-size: 13px; }
-    th, td { border: 1px solid var(--border); padding: 10px 14px; text-align: left; }
-    th { background: #090d16; color: #fff; }
-    td { color: var(--text-muted); }
+    .step-box h4 { color: #0f172a; margin-bottom: 6px; font-size: 14px; font-weight: 700; }
+    table { width: 100%; border-collapse: collapse; margin-bottom: 14px; font-size: 13px; }
+    th, td { border: 1px solid #cbd5e1; padding: 10px 14px; text-align: left; }
+    th { background: #0f172a; color: #ffffff; font-weight: 700; }
+    td { color: #1e293b; background: #ffffff; }
+    tr:nth-child(even) td { background: #f8fafc; }
     .alert-box {
-      background: rgba(16, 185, 129, 0.1);
-      border: 1px solid rgba(16, 185, 129, 0.3);
-      color: #34d399;
-      padding: 14px;
+      background: #ecfdf5;
+      border: 1px solid #a7f3d0;
+      color: #065f46;
+      padding: 14px 18px;
       border-radius: 8px;
-      font-size: 13px;
+      font-size: 13.5px;
       margin-bottom: 16px;
+      font-weight: 500;
     }
     @media print {
-      body { background: #fff; color: #000; padding: 0; }
-      section { background: #fff; border: 1px solid #ccc; color: #000; }
-      h1, h2, h3, h4 { color: #000; }
-      p, ul, ol, td { color: #333; }
-      pre, code { background: #f1f5f9; color: #0f172a; border: 1px solid #cbd5e1; }
+      body { background: #ffffff; color: #000000; padding: 0; }
+      section { background: #ffffff; border: 1px solid #cbd5e1; color: #000000; box-shadow: none; page-break-inside: avoid; }
+      h1, h2, h3, h4 { color: #000000; }
+      p, ul, ol, td { color: #000000; }
+      pre { background: #0f172a !important; color: #ffffff !important; border: 1px solid #000; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      code { background: #f1f5f9 !important; color: #0369a1 !important; border: 1px solid #cbd5e1; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
       .btn-print { display: none; }
+      .alert-box { background: #ecfdf5 !important; border: 1px solid #a7f3d0 !important; color: #065f46 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      th { background: #0f172a !important; color: #ffffff !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
     }
   </style>
 </head>
@@ -132,7 +146,7 @@
     <header>
       <div>
         <h1>MKBL Otomotiv <span class="badge">IT SUNUCU & CANLIYA ALMA REHBERİ</span></h1>
-        <p style="margin: 4px 0 0 0;">Gizli GitHub Depo Erişimi (SSH Deploy Key), Domain (mkbloto.com) & SMTP Ayarları</p>
+        <p style="margin: 4px 0 0 0; color: #475569; font-weight: 500;">Gizli GitHub Depo Erişimi (SSH Deploy Key), Domain (mkbloto.com) & SMTP Ayarları</p>
       </div>
       <button class="btn-print" onclick="window.print()">🖨️ Yazdır / PDF Olarak Kaydet</button>
     </header>
@@ -159,11 +173,9 @@
       <div class="step-box">
         <h4>Adım 1.2: IT Ekibinin Sunucuda SSH Anahtarı Üretmesi</h4>
         <p>IT ekibi Linux sunucuda şu komutla sunucuya özel okuma anahtarı oluşturur:</p>
-        <pre>
-ssh-keygen -t ed25519 -C "mkbl-server-deploy"
-cat ~/.ssh/id_ed25519.pub
-        </pre>
-        <p>Çıkan genel anahtarı (<code>ssh-ed25519 ...</code>) proje sahibine iletirler. Proje sahibi bu anahtarı GitHub reponun <code>Settings ➔ Deploy keys ➔ Add deploy key</code> kısmına ekler.</p>
+        <pre>ssh-keygen -t ed25519 -C "mkbl-server-deploy"
+cat ~/.ssh/id_ed25519.pub</pre>
+        <p style="margin-top: 10px;">Çıkan genel anahtarı (<code>ssh-ed25519 ...</code>) proje sahibine iletirler. Proje sahibi bu anahtarı GitHub reponun <code>Settings ➔ Deploy keys ➔ Add deploy key</code> kısmına ekler.</p>
       </div>
     </section>
 
@@ -211,19 +223,16 @@ cat ~/.ssh/id_ed25519.pub
       
       <div class="step-box">
         <h4>Adım 3.1: Gizli GitHub Depoundan Projeyi Çekme</h4>
-        <pre>
-cd /var/www
+        <pre>cd /var/www
 git clone git@github.com:basaransosyal/mkbl-otomotiv.git mkbloto
 cd mkbloto
-npm install --production=false
-        </pre>
+npm install --production=false</pre>
       </div>
 
       <div class="step-box">
         <h4>Adım 3.2: Ortam Değişkenleri (.env) Dosyasını Oluşturma</h4>
         <p>Proje kök dizininde <code>.env</code> dosyasını oluşturun ve kaydedin:</p>
-        <pre>
-# Canlı Domain URL
+        <pre># Canlı Domain URL
 NEXT_PUBLIC_SITE_URL=https://mkbloto.com
 
 # Veritabanı Bağlantısı (SQLite varsayılandır)
@@ -235,34 +244,28 @@ SMTP_PORT="587"
 SMTP_USER="info@mkbloto.com"
 SMTP_PASS="MailSifreniz2026!"
 SMTP_SENDER="info@mkbloto.com"
-SMTP_ENABLE_SSL="true"
-        </pre>
+SMTP_ENABLE_SSL="true"</pre>
       </div>
 
       <div class="step-box">
         <h4>Adım 3.3: Veritabanını Oluşturma & Üretim Derlemesi (Build)</h4>
-        <pre>
-# SQLite veritabanı tablolarını ve seed verilerini yükler
+        <pre># SQLite veritabanı tablolarını ve seed verilerini yükler
 npx prisma db push
 
 # Next.js canlı üretim derlemesini basar
-npm run build
-        </pre>
+npm run build</pre>
       </div>
 
       <div class="step-box">
         <h4>Adım 3.4: PM2 Process Manager İle Servisi Başlatma</h4>
-        <pre>
-pm2 start npm --name "mkbl-web" -- start -- -p 3000
+        <pre>pm2 start npm --name "mkbl-web" -- start -- -p 3000
 pm2 save
-pm2 startup
-        </pre>
+pm2 startup</pre>
       </div>
 
       <div class="step-box">
         <h4>Adım 3.5: Nginx Reverse Proxy & Certbot SSL Kurulumu</h4>
-        <pre>
-# /etc/nginx/sites-available/mkbloto.com dosyası oluşturun:
+        <pre># /etc/nginx/sites-available/mkbloto.com dosyası oluşturun:
 server {
     server_name mkbloto.com www.mkbloto.com;
 
@@ -279,8 +282,7 @@ server {
 # Nginx aktif edip Ücretsiz Let's Encrypt SSL sertifikasını yükleyin:
 sudo ln -s /etc/nginx/sites-available/mkbloto.com /etc/nginx/sites-enabled/
 sudo nginx -t && sudo systemctl reload nginx
-sudo certbot --nginx -d mkbloto.com -d www.mkbloto.com
-        </pre>
+sudo certbot --nginx -d mkbloto.com -d www.mkbloto.com</pre>
       </div>
     </section>
 
@@ -292,7 +294,7 @@ sudo certbot --nginx -d mkbloto.com -d www.mkbloto.com
       </p>
 
       <div class="alert-box">
-        💡 <strong>ÖNEMLİ İPUCU (Yönetim Paneli Kolaylığı):</strong> SMTP sunucu ayarlarını koda dokunmadan doğrudan canlı sitenizin Admin Paneli ➔ <strong>Site Ayarları ➔ E-Posta & Bildirim Ayarları</strong> sekmesinden tek tıkla yapabilir ve <strong>"E-Posta Gönderimini Test Et"</strong> butonuyla maillerin ulaştığını anında canlıda test edebilirsiniz!
+        💡 <strong>YÖNETİM PANELİ KOLAYLIĞI:</strong> SMTP sunucu ayarlarını koda dokunmadan doğrudan canlı sitenizin Admin Paneli ➔ <strong>Site Ayarları ➔ E-Posta & Bildirim Ayarları</strong> sekmesinden tek tıkla yapabilir ve <strong>"E-Posta Gönderimini Test Et"</strong> butonuyla maillerin ulaştığını anında canlıda test edebilirsiniz!
       </div>
 
       <table>
@@ -342,12 +344,10 @@ sudo certbot --nginx -d mkbloto.com -d www.mkbloto.com
 
       <div class="step-box" style="margin-top: 16px;">
         <h4>🔄 Sitede Bir Güncelleme Yapıldığında IT Ekibinin Komutları (Aracısız & Otomatik):</h4>
-        <pre>
-cd /var/www/mkbloto
+        <pre>cd /var/www/mkbloto
 git pull origin main
 npm run build
-pm2 restart mkbl-web
-        </pre>
+pm2 restart mkbl-web</pre>
       </div>
     </section>
   </div>
