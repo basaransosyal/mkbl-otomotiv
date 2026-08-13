@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MKBL Otomotiv - Teknik Doküman & Yazılım Mimarısı</title>
+  <style>
+    :root {
+      --primary: #2563eb;
+      --primary-dark: #1d4ed8;
+      --bg: #0f172a;
+      --card-bg: #1e293b;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --accent: #38bdf8;
+      --border: #334155;
+      --success: #22c55e;
+      --warning: #f59e0b;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      padding: 40px 20px;
+    }
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    header {
+      border-bottom: 2px solid var(--border);
+      padding-bottom: 24px;
+      margin-bottom: 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    h1 { font-size: 28px; color: #fff; display: flex; items-center: center; gap: 12px; }
+    .badge {
+      background: rgba(56, 189, 248, 0.1);
+      color: var(--accent);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      padding: 4px 12px;
+      border-radius: 9999px;
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .btn-print {
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn-print:hover { background: var(--primary-dark); }
+    section {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 32px;
+      margin-bottom: 32px;
+    }
+    h2 {
+      font-size: 20px;
+      color: var(--accent);
+      margin-bottom: 16px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 8px;
+    }
+    h3 { font-size: 16px; color: #fff; margin: 20px 0 10px 0; }
+    p { color: var(--text-muted); margin-bottom: 16px; font-size: 14px; }
+    ul { margin-left: 20px; color: var(--text-muted); font-size: 14px; margin-bottom: 16px; }
+    li { margin-bottom: 6px; }
+    code {
+      background: #090d16;
+      color: #38bdf8;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-family: monospace;
+      font-size: 13px;
+    }
+    pre {
+      background: #090d16;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px;
+      overflow-x: auto;
+      color: #e2e8f0;
+      font-family: monospace;
+      font-size: 13px;
+      margin-bottom: 16px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+    .card {
+      background: #090d16;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+    }
+    .card h4 { color: #fff; font-size: 15px; margin-bottom: 8px; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 16px;
+      font-size: 13px;
+    }
+    th, td {
+      border: 1px solid var(--border);
+      padding: 10px 14px;
+      text-align: left;
+    }
+    th { background: #090d16; color: #fff; }
+    td { color: var(--text-muted); }
+    @media print {
+      body { background: #fff; color: #000; padding: 0; }
+      section { background: #fff; border: 1px solid #ccc; color: #000; }
+      h1, h2, h3, h4 { color: #000; }
+      p, ul, td { color: #333; }
+      pre, code { background: #f1f5f9; color: #0f172a; border: 1px solid #cbd5e1; }
+      .btn-print { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div>
+        <h1>MKBL Otomotiv <span class="badge">V1.0 TEKNİK DOKÜMAN</span></h1>
+        <p style="margin: 4px 0 0 0;">Yazılım Mimarisi, Dizin Yapısı & Kod Standartları Kılavuzu</p>
+      </div>
+      <button class="btn-print" onclick="window.print()">🖨️ Yazdır / PDF Olarak Kaydet</button>
+    </header>
+
+    <!-- PROJE ÖZETİ -->
+    <section>
+      <h2>1. Proje Genel Tanımı & Teknolojiler</h2>
+      <p>
+        MKBL Otomotiv Kepez Showroom web uygulaması, elektrikli araç (Karea Fit) tanıtımı, canlı piyasa tasarruf hesaplayıcısı, 3D etkileşimli galeri, online servis/test sürüşü randevusu ve dinamik içerik yönetimine sahip tam teşekküllü kurumsal bir web yazılımıdır.
+      </p>
+      <div class="grid">
+        <div class="card">
+          <h4>🚀 Framework & Çekirdek</h4>
+          <p><strong>Next.js 14 (App Router)</strong><br>React 18 ile Server Components ve Client Components yapısı.</p>
+        </div>
+        <div class="card">
+          <h4>📘 Dil & Tip Güvenliği</h4>
+          <p><strong>TypeScript (Strict Mode)</strong><br>Tüm veri modellerinde %100 tip kontrolü.</p>
+        </div>
+        <div class="card">
+          <h4>🎨 Tasarım & UI</h4>
+          <p><strong>Tailwind CSS & Lucide Icons</strong><br>Glassmorphism, dark mode ve mobil uyumlu responsive tasarım.</p>
+        </div>
+        <div class="card">
+          <h4>🗄️ Veritabanı & ORM</h4>
+          <p><strong>Prisma ORM & SQLite / PostgreSQL</strong><br>Otomatik migration ve veri doğrulama katmanı.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- MİMARİ VE DİZİN YAPISI -->
+    <section>
+      <h2>2. Proje Dizin Yapısı & Kod Organizasyonu</h2>
+      <p>
+        Kodlar modüler, okunabilir ve sürdürülebilir kurumsal yazılım mimarisi prensiplerine (Clean Code & SoC) uygun olarak klasörlenmiştir:
+      </p>
+      <pre>
+MKBL Web Site/
+├── prisma/
+│   └── schema.prisma           # Prisma veritabanı veri modelleri (SiteSettings, Vehicle, User, vs.)
+├── public/                     # Statik dosyalar, görseller ve HTML rehberler
+├── src/
+│   ├── app/                    # Next.js 14 App Router Sayfa ve API Rotaları
+│   │   ├── admin/              # Şifreli Yönetim Paneli (Settings, Vehicles, Gallery, vs.)
+│   │   ├── api/                # Backend REST API endpointleri (/api/fuel-rates, /api/settings, vs.)
+│   │   ├── contact/            # İletişim & Konum Sayfası
+│   │   ├── models/             # Araç Detay & Modeller Sayfası
+│   │   ├── service/            # Servis & Bakım Randevu Sayfası
+│   │   ├── layout.tsx          # Ana HTML yapısı ve Navbar/Footer sarmalayıcısı
+│   │   └── page.tsx            # Vitrin Ana Sayfa
+│   ├── components/             # Reusable UI Bileşenleri
+│   │   ├── CostCalculator.tsx  # Canlı Yakıt Tasarruf Hesaplama Modülü
+│   │   ├── Vehicle3DRotator.tsx# 360 Derece Araç İnceleme Modülü
+│   │   ├── Navbar.tsx          # Dinamik Üst Menü
+│   │   └── Footer.tsx          # Dinamik Alt Bilgi Alanı
+│   └── lib/                    # Yardımcı Servisler & Veritabanı Bağlantıları
+│       ├── fuelService.ts      # EPİAŞ CAS & CollectAPI Canlı Veri Servisi (Failover & Cache)
+│       ├── mail.ts             # Nodemailer SMTP E-Posta Gönderim Servisi
+│       ├── prisma.ts           # PrismaClient Singleton Nesnesi
+│       └── settings.ts         # Varsayılan Site Ayarları & Tip Tanımları
+├── .env.example                # Çevre değişkenleri örnek şablonu
+├── package.json                # Bağımlılıklar ve npm scriptleri
+└── tailwind.config.js          # Tema ve renk konfigürasyonu
+      </pre>
+    </section>
+
+    <!-- ENTEGRASYON VE ENTEGRASYON MİMARİSİ -->
+    <section>
+      <h2>3. Canlı API Entegrasyon Mimarisi (EPİAŞ & CollectAPI)</h2>
+      <p>
+        Tasarruf hesaplayıcısındaki canlı veriler dış API'lerden güvenli ve toleranslı (Failover & Self-Healing) şekilde çekilir:
+      </p>
+      
+      <h3>A. EPİAŞ Elektrik API Servisi (Teknik Kılavuz v1.15.15 Uyumlu)</h3>
+      <ul>
+        <li><strong>CAS TGT Kimlik Doğrulama:</strong> <code>https://giris.epias.com.tr/cas/v1/tickets</code> endpoint'ine <code>application/x-www-form-urlencoded</code> formatında <code>username</code> ve <code>password</code> gönderilerek 2 saat geçerli <code>TGT-xxxx</code> bileti alınır.</li>
+        <li><strong>PTF Fiyat Sorgulama:</strong> Alınan TGT bileti <code>TGT</code> başlığı olarak <code>https://seffaflik.epias.com.tr/electricity-service/v1/markets/dam/data/mcp</code> endpoint'ine gönderilir ve güncel piyasa takas fiyatı (TL/MWh) çekilerek mesken tarifesine dönüştürülür.</li>
+        <li><strong>Manuel API Key Desteği:</strong> Admin panelinden girilen özel TGT bilet anahtarı varsa sistem login yapmadan doğrudan sorgu atar.</li>
+      </ul>
+
+      <h3>B. CollectAPI Akaryakıt (Benzin) Servisi</h3>
+      <ul>
+        <li><strong>Benzin Pompa Fiyatı:</strong> <code>https://api.collectapi.com/gasPrice/turkeyGasoline?city=antalya</code> üzerinden canlı Antalya benzin fiyatı çekilir.</li>
+      </ul>
+
+      <h3>C. Veri Güvenliği & Kesinti Koruması (Failover & Rate Limit Guard)</h3>
+      <ul>
+        <li><strong>3.5 Saniye AbortController Zaman Aşımı:</strong> Dış API yanıt vermezse sunucu kilitlenmez.</li>
+        <li><strong>Son Kayıtlı Fiyat Koruması:</strong> Bağlantı koparsa veri sıfırlanmaz, kesintiden önceki son geçerli fiyat otomatik devreye girer.</li>
+        <li><strong>24 Saatlik Önbellek:</strong> Günde sadece 1 kez sorgu atılarak IP engellemesi (WAF Rate Limit) önlenir.</li>
+        <li><strong>Manuel Admin Varsayılanı:</strong> API kapalıyken Admin Paneli'nde belirlenen sabit tarifeler gösterilir.</li>
+      </ul>
+    </section>
+
+    <!-- VERİTABANI ŞEMALARI -->
+    <section>
+      <h2>4. Veritabanı Modelleri (Prisma Schema Summary)</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Model Adı</th>
+            <th>Açıklama</th>
+            <th>Önemli Alanlar</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>SiteSettings</code></td>
+            <td>Tüm sitenin dinamik ayarları ve API bilgileri</td>
+            <td><code>collectApiKey</code>, <code>collectApiActive</code>, <code>epiasUser</code>, <code>epiasPass</code>, <code>epiasApiKey</code>, <code>epiasActive</code>, <code>defaultElectricityRate</code>, <code>defaultGasPrice</code></td>
+          </tr>
+          <tr>
+            <td><code>Vehicle</code></td>
+            <td>Araç katalog modelleri ve teknik özellikleri</td>
+            <td><code>name</code>, <code>price</code>, <code>range</code>, <code>topSpeed</code>, <code>batteryCap</code>, <code>isHero</code>, <code>images</code></td>
+          </tr>
+          <tr>
+            <td><code>ServiceBooking</code></td>
+            <td>Online servis ve bakım randevusu talepleri</td>
+            <td><code>fullName</code>, <code>phone</code>, <code>email</code>, <code>plateNumber</code>, <code>preferredDate</code>, <code>status</code></td>
+          </tr>
+          <tr>
+            <td><code>TestDriveRequest</code></td>
+            <td>Test sürüşü başvuru kayıtları</td>
+            <td><code>fullName</code>, <code>phone</code>, <code>email</code>, <code>selectedModel</code>, <code>preferredDate</code>, <code>status</code></td>
+          </tr>
+          <tr>
+            <td><code>Message</code></td>
+            <td>İletişim formu mesajları</td>
+            <td><code>fullName</code>, <code>email</code>, <code>phone</code>, <code>subject</code>, <code>message</code>, <code>isRead</code></td>
+          </tr>
+          <tr>
+            <td><code>User</code></td>
+            <td>Admin paneli yetkili kullanıcıları</td>
+            <td><code>username</code>, <code>password</code> (Bcrypt Hashed), <code>role</code></td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+  </div>
+</body>
+</html>

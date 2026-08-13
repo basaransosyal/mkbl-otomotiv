@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MKBL Otomotiv - Canlıya Alma & Sunucu Kurulum Rehberi</title>
+  <style>
+    :root {
+      --primary: #10b981;
+      --primary-dark: #059669;
+      --bg: #0f172a;
+      --card-bg: #1e293b;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --accent: #34d399;
+      --border: #334155;
+      --code-bg: #090d16;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      padding: 40px 20px;
+    }
+    .container { max-width: 1000px; margin: 0 auto; }
+    header {
+      border-bottom: 2px solid var(--border);
+      padding-bottom: 24px;
+      margin-bottom: 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    h1 { font-size: 26px; color: #fff; }
+    .badge {
+      background: rgba(16, 185, 129, 0.1);
+      color: var(--accent);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      padding: 4px 12px;
+      border-radius: 9999px;
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .btn-print {
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn-print:hover { background: var(--primary-dark); }
+    section {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 32px;
+      margin-bottom: 32px;
+    }
+    h2 {
+      font-size: 20px;
+      color: var(--accent);
+      margin-bottom: 16px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 8px;
+    }
+    h3 { font-size: 16px; color: #fff; margin: 20px 0 10px 0; }
+    p { color: var(--text-muted); margin-bottom: 16px; font-size: 14px; }
+    ul, ol { margin-left: 20px; color: var(--text-muted); font-size: 14px; margin-bottom: 16px; }
+    li { margin-bottom: 8px; }
+    code {
+      background: var(--code-bg);
+      color: #38bdf8;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-family: monospace;
+      font-size: 13px;
+    }
+    pre {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px;
+      overflow-x: auto;
+      color: #e2e8f0;
+      font-family: monospace;
+      font-size: 13px;
+      margin-bottom: 16px;
+    }
+    .step-box {
+      background: #090d16;
+      border-left: 4px solid var(--primary);
+      padding: 16px;
+      border-radius: 0 8px 8px 0;
+      margin-bottom: 16px;
+    }
+    .step-box h4 { color: #fff; margin-bottom: 6px; }
+    table { width: 100%; border-collapse: collapse; margin-bottom: 16px; font-size: 13px; }
+    th, td { border: 1px solid var(--border); padding: 10px 14px; text-align: left; }
+    th { background: #090d16; color: #fff; }
+    td { color: var(--text-muted); }
+    @media print {
+      body { background: #fff; color: #000; padding: 0; }
+      section { background: #fff; border: 1px solid #ccc; color: #000; }
+      h1, h2, h3, h4 { color: #000; }
+      p, ul, ol, td { color: #333; }
+      pre, code { background: #f1f5f9; color: #0f172a; border: 1px solid #cbd5e1; }
+      .btn-print { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div>
+        <h1>MKBL Otomotiv <span class="badge">CANLIYA ALMA REHBERİ</span></h1>
+        <p style="margin: 4px 0 0 0;">Hosting, VPS Sunucu, SMTP Mail & API Kurulum Adımları</p>
+      </div>
+      <button class="btn-print" onclick="window.print()">🖨️ Yazdır / PDF Olarak Kaydet</button>
+    </header>
+
+    <!-- 1. HAZIRLIK VE ENV AYARLARI -->
+    <section>
+      <h2>1. Ortam Değişkenleri (.env) Yapılandırması</h2>
+      <p>
+        Sunucuya canlıya almadan önce projenin kök dizininde bir <code>.env</code> dosyası oluşturulmalı ve canlı bilgiler tanımlanmalıdır:
+      </p>
+      <pre>
+# Veritabanı Bağlantısı (SQLite varsayılandır. PostgreSQL için postgresql://... yazılabilir)
+DATABASE_URL="file:./dev.db"
+
+# Admin Paneli Giriş Bilgileri (Canlıda güçlü şifre belirleyin)
+ADMIN_USERNAME="admin"
+ADMIN_PASSWORD="GüçlüŞifreniz2026!"
+
+# SMTP Kurumsal Mail Sunucu Ayarları (Form bildirimleri için)
+SMTP_HOST="mail.mkblotomotiv.com"
+SMTP_PORT="465"
+SMTP_USER="info@mkblotomotiv.com"
+SMTP_PASS="MailSifreniz2026!"
+SMTP_SENDER="MKBL Otomotiv &lt;info@mkblotomotiv.com&gt;"
+SMTP_ENABLE_SSL="true"
+
+# Dış API Anahtarları (Opsiyonel - Admin Panelinden de girilebilir)
+COLLECT_API_KEY="apikey sizin_collectapi_anahtariniz"
+EPIAS_USERNAME="mkblsosyal@gmail.com"
+EPIAS_PASSWORD="Basaran+2026"
+EPIAS_API_KEY=""
+      </pre>
+    </section>
+
+    <!-- 2. HOSTING & VPS KURULUM SEÇENEKLERİ -->
+    <section>
+      <h2>2. Sunucu & Hosting Kurulum Seçenekleri</h2>
+      
+      <div class="step-box">
+        <h4>A. Vercel veya Netlify İle Kurulum (En Kolay & Ücretsiz SSL)</h4>
+        <ol>
+          <li>Projeyi GitHub / GitLab deponuza yükleyin.</li>
+          <li><a href="https://vercel.com" target="_blank" style="color: #38bdf8;">Vercel.com</a> paneline girip <strong>"New Project"</strong> deyin.</li>
+          <li>Yukarıdaki <code>.env</code> değişkenlerini Vercel Environment Variables kısmına ekleyin.</li>
+          <li><strong>Deploy</strong> butonuna basın. Otomatik SSL ve CDN ile 1 dakikada canlıya alınır.</li>
+        </ol>
+      </div>
+
+      <div class="step-box">
+        <h4>B. Ubuntu / Linux VPS (DigitalOcean, AWS, Hetzner) İle Kurulum</h4>
+        <ol>
+          <li><strong>Node.js 18+ & PM2 Kurulumu:</strong>
+            <pre>
+curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
+sudo apt-get install -y nodejs
+sudo npm install -g pm2
+            </pre>
+          </li>
+          <li><strong>Projenin Çekilmesi & Derlenmesi:</strong>
+            <pre>
+git clone https://github.com/kullanici/mkbl-otomotiv.git
+cd mkbl-otomotiv
+npm install
+npx prisma db push
+npm run build
+            </pre>
+          </li>
+          <li><strong>PM2 İle Arka Planda Başlatma:</strong>
+            <pre>
+pm2 start npm --name "mkbl-web" -- start
+pm2 save
+pm2 startup
+            </pre>
+          </li>
+          <li><strong>Nginx Proxy & Certbot SSL Kurulumu:</strong>
+            <pre>
+sudo apt install nginx certbot python3-certbot-nginx
+# Nginx konfigürasyonunda location / { proxy_pass http://localhost:3000; } ayarlayın
+sudo certbot --nginx -d mkblotomotiv.com
+            </pre>
+          </li>
+        </ol>
+      </div>
+
+      <div class="step-box">
+        <h4>C. cPanel / Plesk Node.js Hosting İle Kurulum</h4>
+        <ol>
+          <li>cPanel'de <strong>"Setup Node.js App"</strong> menüsüne girin.</li>
+          <li>Node.js Sürümünü <strong>18.x veya 20.x</strong> seçin. App Root klasörünü belirleyin.</li>
+          <li>Dosyaları cPanel File Manager ile yükleyin (<code>node_modules</code> ve <code>.next</code> hariç).</li>
+          <li>cPanel Terminal'den <code>npm install</code>, <code>npx prisma db push</code> ve <code>npm run build</code> komutlarını çalıştırın.</li>
+          <li><strong>Restart Application</strong> butonuna basarak uygulamayı başlatın.</li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- 3. MAIL SUNUCUSU AYARLARI -->
+    <section>
+      <h2>3. Kurumsal E-Posta (SMTP Mail Sunucusu) Ayarları</h2>
+      <p>
+        İletişim, online servis randevusu ve test sürüşü formlarının e-posta bildirimi olarak gelmesi için SMTP ayarlarının yapılması gereklidir:
+      </p>
+      <table>
+        <thead>
+          <tr>
+            <th>Sağlayıcı</th>
+            <th>SMTP Host</th>
+            <th>Port</th>
+            <th>Güvenlik</th>
+            <th>Notlar</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>cPanel Kurumsal Mail</strong></td>
+            <td><code>mail.domaininiz.com</code></td>
+            <td><code>465</code></td>
+            <td>SSL / TLS (Active)</td>
+            <td>Hosting firmanızın verdiği e-posta şifresini kullanın.</td>
+          </tr>
+          <tr>
+            <td><strong>Yandex Kurumsal Mail</strong></td>
+            <td><code>smtp.yandex.com</code></td>
+            <td><code>465</code></td>
+            <td>SSL (Active)</td>
+            <td>Yandex Hesap Ayarları'ndan "Uygulama Şifresi" üretin.</td>
+          </tr>
+          <tr>
+            <td><strong>Gmail (Google Workspace)</strong></td>
+            <td><code>smtp.gmail.com</code></td>
+            <td><code>587</code> veya <code>465</code></td>
+            <td>STARTTLS / SSL</td>
+            <td>2 Adımlı Doğrulama açıp "Uygulama Şifresi" alın.</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>
+        SMTP ayarlarını Admin Paneli ➔ <strong>Site Ayarları ➔ Genel Bilgiler</strong> sekmesinden veya <code>.env</code> dosyasından istediğiniz zaman değiştirebilirsiniz.
+      </p>
+    </section>
+
+    <!-- 4. CANLI VERİ API KURULUMU VE TESTİ -->
+    <section>
+      <h2>4. EPİAŞ & CollectAPI Canlı Veri Aktivasyon Adımları</h2>
+      <ol>
+        <li>Admin paneline giriş yapın: <code>http://domaininiz.com/admin</code></li>
+        <li><strong>Site Ayarları ➔ Tasarruf Hesaplayıcı</strong> sekmesine geçin.</li>
+        <li><strong>CollectAPI Benzin Fiyatı:</strong> <a href="https://collectapi.com" target="_blank" style="color:#38bdf8;">CollectAPI.com</a> adresinden ücretsiz veya paket API key alıp yapıştırın ve switch'i <strong>ON (Aktif)</strong> konuma getirin.</li>
+        <li><strong>EPİAŞ Elektrik Fiyatı:</strong> EPİAŞ Şeffaflık Portalı Kullanıcı Adı, Şifre veya API Key bilginizi girip switch'i <strong>ON (Aktif)</strong> konuma getirin.</li>
+        <li>Üstteki <strong>"⚡ Veri Akışını Test Et"</strong> butonuna basarak yeşil ışığın <code>🟢 VERİ AKIŞI AKTİF</code> yandığını doğrulayın.</li>
+      </ol>
+    </section>
+
+    <!-- 5. KONTROL VE BAKIM -->
+    <section>
+      <h2>5. Yayın Sonrası Kontrol Listesi (Checklist)</h2>
+      <ul>
+        <li>✅ Sitede SSL (HTTPS) sertifikasının aktif olduğunu doğrulayın.</li>
+        <li>✅ Test sürüşü ve servis formunu doldurup SMTP e-postanın ulaştığını kontrol edin.</li>
+        <li>✅ Admin paneli şifresini canlı ortamda güçlü bir şifre ile değiştirin.</li>
+        <li>✅ Tasarruf hesaplayıcısında canlı piyasa verilerinin doğrulandığını görün.</li>
+      </ul>
+    </section>
+  </div>
+</body>
+</html>

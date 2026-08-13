@@ -1,0 +1,297 @@
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Vehicle {
+  id              String   @id @default(uuid())
+  name            String
+  tagline         String
+  category        String   // City, Cargo, Sport, Cross
+  price           Float
+  rangeKm         Int
+  topSpeed        Int
+  chargeTime      String
+  battery         String
+  licenseType     String
+  motorPower      String
+  dimensions      String   @default("2.631 mm x 1.498 mm x 1.621 mm")
+  chargePower     String   @default("3,3 kW/s Ev Tipi 220V")
+  capacityDetails String   @default("3 Kapı / 2 Koltuk / 184 L")
+  rimSize         String   @default("13 inç Alaşım Jant")
+  images          String   // JSON Array string
+  colors          String   // JSON Array string
+  features        String   // JSON Array string
+  stockStatus     String   @default("STOKTA") // STOKTA, ÖN SİPARİŞ, TÜKENDİ
+  isPublished     Boolean  @default(true)
+  showOnHomepage  Boolean  @default(true)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+model TestDriveRequest {
+  id            String   @id @default(uuid())
+  fullName      String
+  phone         String
+  email         String
+  city          String
+  vehicleId     String?
+  vehicleName   String
+  preferredDate String
+  preferredTime String
+  status        String   @default("BEKLEMEDE") // BEKLEMEDE, ARANDI, TAMAMLANDI, İPTAL
+  notes         String?
+  createdAt     DateTime @default(now())
+}
+
+model ServiceAppointment {
+  id              String   @id @default(uuid())
+  fullName        String
+  phone           String
+  email           String
+  licensePlate    String
+  vehicleModel    String
+  serviceType     String
+  appointmentDate String
+  appointmentTime String
+  status          String   @default("BEKLEMEDE") // BEKLEMEDE, ONAYLANDI, TAMAMLANDI, İPTAL
+  userNotes       String?
+  createdAt       DateTime @default(now())
+}
+
+model ContactMessage {
+  id        String   @id @default(uuid())
+  fullName  String
+  phone     String
+  email     String
+  subject   String
+  message   String
+  status    String   @default("BEKLEMEDE") // BEKLEMEDE, OKUNDU, YANITLANDI, İPTAL
+  createdAt DateTime @default(now())
+}
+
+model SiteSettings {
+  id                  String   @id @default("default")
+  siteName            String   @default("MKBL Otomotiv")
+  phone               String   @default("+90 (212) 888 00 26")
+  email               String   @default("info@mkbloto.com")
+  address             String   @default("Maslak Mahallesi, Büyükdere Caddesi No: 185, Maslak Plaza, Sarıyer / İstanbul")
+  workingHours        String   @default("Hafta İçi & Cumartesi: 09:00 - 19:00 | Pazar: 11:00 - 17:00 (Nöbetçi Ekip)")
+  copyrightText       String   @default("© 2026 MKBL Otomotiv A.Ş. Tüm hakları saklıdır.")
+  facebookUrl         String   @default("https://facebook.com")
+  instagramUrl        String   @default("https://instagram.com")
+  linkedinUrl         String   @default("https://linkedin.com")
+  youtubeUrl          String   @default("https://youtube.com")
+  
+  // Header Nav Menu Texts, Buttons & Visibility Flags
+  navHomeText         String   @default("Ana Sayfa")
+  navHomeActive       Boolean  @default(true)
+  navModelsText       String   @default("Modeller")
+  navModelsActive     Boolean  @default(true)
+  navServiceText      String   @default("Servis & Bakım")
+  navServiceActive    Boolean  @default(false)
+  navContactText      String   @default("Showroom & İletişim")
+  navContactActive    Boolean  @default(true)
+  navCtaButtonText    String   @default("Teklif & Sürüş Randevusu Al")
+  navCtaButtonUrl     String   @default("/models/karea-fit")
+  navCtaButtonActive  Boolean  @default(true)
+
+  // Master Service Module Switch
+  showServiceModule   Boolean  @default(false)
+
+  // Home Page Banner / Hero
+  heroTitle           String   @default("Bindiğin Gibi Değil. MKBL Karea Fit")
+  heroSubtitle        String   @default("Var olan bir sınıftan değil, yeni bir sınıfın ilki. %100 elektrikli Karea Fit, bugün şehir hayatına tam uyum sağlamak için tasarlandı.")
+  heroBadge           String   @default("MKBL Otomotiv Güvencesiyle %100 Elektrikli")
+  ctaButtonText       String   @default("Test Sürüşü Randevusu Al")
+  ctaButtonUrl        String   @default("/models/karea-fit")
+
+  // Footer Settings
+  footerDescription   String   @default("MKBL Otomotiv güvencesiyle temsil edilen %100 elektrikli, ideal şehir aracı MKBL Karea Fit. Ev tipi 220V prizden hızlı şarj (%20-%80 2 saat) ile şehir içi pratik ve ekonomik ulaşım.")
+  footerBadge1        String   @default("Maslak Showroom Açık")
+  footerBadge2        String   @default("%100 Elektrikli Karea Fit")
+  footerModelLinksTitle String @default("Model İnceleme")
+  footerServicesTitle String   @default("Hizmetler")
+  footerShowroomTitle String   @default("Kepez Showroom")
+
+  // Footer Column Link Texts, URLs & Active Flags
+  footerModelLink1    String   @default("Karea Fit (Teknik Özellikler)")
+  footerModelLink1Url String   @default("/models/karea-fit")
+  footerModelLink1Active Boolean @default(true)
+  footerModelLink2    String   @default("360° Renk Seçenekleri")
+  footerModelLink2Url String   @default("/models/karea-fit")
+  footerModelLink2Active Boolean @default(true)
+  footerModelLink3    String   @default("Ev Tipi 220V Şarj Gücü")
+  footerModelLink3Url String   @default("/models/karea-fit")
+  footerModelLink3Active Boolean @default(true)
+  footerServiceLink1  String   @default("Elektrikli Periyodik Bakım")
+  footerServiceLink1Url String @default("/service")
+  footerServiceLink1Active Boolean @default(true)
+  footerServiceLink2  String   @default("LFP Batarya Health Check-up")
+  footerServiceLink2Url String @default("/service")
+  footerServiceLink2Active Boolean @default(true)
+  footerServiceLink3  String   @default("220V Şarj Güvenlik Kontrolü")
+  footerServiceLink3Url String @default("/service")
+  footerServiceLink3Active Boolean @default(true)
+  footerServiceLink4  String   @default("Kepez Showroom & Deneyim")
+  footerServiceLink4Url String @default("/contact")
+  footerServiceLink4Active Boolean @default(true)
+  footerAdminLinkText String   @default("Yönetim Paneli (Admin)")
+  footerAdminLinkUrl  String   @default("/admin")
+  footerAdminLinkActive Boolean @default(true)
+
+  // Calculator Default Rates & Visibility
+  calcTitle           String   @default("Benzine Karşı Katlarca Yakıt Tasarrufu")
+  calcSubtitle        String   @default("Aylık ortalama kaç kilometre yol yaptığınızı seçin, Karea Fit ile her yıl ne kadar tasarruf edeceğinizi hesaplayın.")
+  defaultElectricityRate Float  @default(2.75)
+  defaultGasPrice     Float    @default(44.50)
+  defaultGasConsump   Float    @default(7.5)
+  defaultEvConsump    Float    @default(7.4)
+  showCalculator      Boolean  @default(true)
+  collectApiKey       String?  @default("")
+  collectApiActive    Boolean  @default(false)
+  epiasUser           String?  @default("mkblsosyal@gmail.com")
+  epiasPass           String?  @default("Basaran+2026")
+  epiasApiKey         String?  @default("")
+  epiasActive         Boolean  @default(false)
+  autoFetchFuelRates  Boolean  @default(true)
+
+  // Live WhatsApp Widget Settings
+  whatsappActive      Boolean  @default(true)
+  whatsappPhone       String   @default("905321234567")
+  whatsappTitle       String   @default("Kepez Showroom Canlı Destek")
+  whatsappSubtitle    String   @default("Size nasıl yardımcı olabiliriz?")
+  whatsappMessage     String   @default("Merhaba! Karea Fit elektrikli araçlar hakkında bilgi almak istiyorum.")
+  whatsappQuickOptions String  @default("[\"🚗 Karea Fit Test Sürüşü İstiyorum\", \"💰 Fiyat & Kredi Teklifi Al\", \"📍 Showroom Konumu İstiyorum\", \"🔧 Servis & Bakım Randevusu\"]")
+  whatsappPosition    String   @default("bottom-right")
+
+  // Showroom Contact Page Editable Content
+  contactPageBadge    String   @default("MKBL OTOMOTİV KEPEZ SHOWROOM")
+  contactPageTitle    String   @default("Bize Ulaşın & Showroomumuzu Ziyaret Edin")
+  contactPageSubtitle String   @default("Karea Fit %100 elektrikli ideal şehir aracımızı bizzat test etmek, fiyat ve teslimat teklifi almak için Kepez showroomumuza davetlisiniz.")
+  contactInfoTitle    String   @default("Showroom İletişim Bilgileri")
+  contactMapName      String   @default("MKBL Kepez Plaza")
+  contactMapCoords    String   @default("36.9200° N, 30.7600° E")
+  contactMapButtonText String  @default("Google Maps'te Yol Tarifi Al")
+  contactMapUrl       String   @default("https://maps.google.com/?q=Kepez+Antalya")
+  contactMapEmbedUrl  String   @default("")
+  contactFormBadge    String   @default("BİZE YAZIN")
+  contactFormTitle    String   @default("İletişim & Karea Fit Teklif Formu")
+  contactFormSubtitle String   @default("Formu doldurarak merak ettiğiniz tüm soruları iletebilir, uzman ekibimizden detaylı yanıt alabilirsiniz.")
+  contactFormButtonText String @default("Mesaj Gönder")
+
+  // Service Page Editable Content
+  servicePageBadge    String   @default("MKBL OTOMOTİV YETKİLİ SERVİS")
+  servicePageTitle    String   @default("Elektrikli Araç Bakım & Servis Hizmetleri")
+  servicePageSubtitle String   @default("Karea Fit aracınızın periyodik bakımı, LFP batarya ölçümü ve 220V ev şarjı güvenlik kontrolleri için Kepez yetkili servisimiz hizmetinizde.")
+  serviceFormBadge    String   @default("RANDEVU ALIN")
+  serviceFormTitle    String   @default("Servis Randevusu Oluşturun")
+  serviceFormSubtitle String   @default("Aracınızın şasi numarası ve plakanız ile kolayca online servis randevusu alabilirsiniz.")
+  serviceFormButtonText String @default("Servis Randevusu Onayla")
+
+  // Test Drive Form Editable Content
+  testDriveFormBadge    String @default("MKBL VIP DENEYİM")
+  testDriveFormTitle    String @default("Karea Fit Test Sürüşü Randevusu")
+  testDriveFormSubtitle String @default("Elektrikli ideal şehir aracı Karea Fit'i Kepez Showroom'da bizzat deneyimleyin.")
+  testDriveFormButtonText String @default("Test Sürüşü Randevusunu Onayla")
+
+  // Consent Texts
+  consentExplicitText   String @default("BAŞARAN OTOMOTİV OTELCİLİK TURİZM İNŞ.SAN.VE TİC.A.Ş tarafından; özel ürünler, hizmetler ve teklifler oluşturulmasını, Kişisel Verilerin İşlenmesine İlişkin Aydınlatma Metni'nde tarif edildiği gibi kişisel verilerimin satış, pazarlama, tanıtım, etkinlik, faaliyetlerinde kullanılmasını ve bu amaçlarla verilerimin yurt içi ve dışındaki iş ortaklarınızla paylaşılmasını kabul ediyorum.")
+  consentCommercialText String @default("BAŞARAN OTOMOTİV OTELCİLİK TURİZM İNŞAAT SANAYİ VE TİCARET ANONİM ŞİRKETİ tarafından gerçekleştirilecek aktivite, tanıtım, ürün, hizmet ve kampanyalarla ilgili reklam ve promosyonlardan haberdar olmak için Şirketimiz tarafından şahsınıza ticari elektronik ileti gönderilmesine onay vermeniz gerekmektedir.\n\nİzin verdiğiniz takdirde; BAŞARAN OTOMOTİV OTELCİLİK TURİZM İNŞAAT SANAYİ VE TİCARET ANONİM ŞİRKETİ'nin size kampanya ve tanıtımlarla ilgili bilgi sunmasını ve satış, pazarlama ve benzer amaçlı her türlü iletişim mesajlarını göndermesini, paylaşmış olduğunuz kişisel verilerinizi işleyerek, size telefon, kısa mesaj ve elektronik posta ile ulaşılmasını ve elektronik iletilerin içeriğinin ve diğer kayıtların gerektiğinde ilgili Bakanlığa sunulmak üzere kayıt altına alınarak saklanmasını kabul etmeksiniz.\n\nBu bilgiler sadece iletilerinizin sağlıklı şekilde teslim edilmesi, telefon, sms ve/veya e-posta yoluyla bildirimlerimizin zamanında ulaştırılabilmesi amacıyla sözleşme ilişkisi içinde olduğumuz 3. kişilerle gerekli ölçüde paylaşılacaktır.\n\nDilediğiniz zaman, hiçbir gerekçe göstermeksizin bu kullanım şartları kapsamındaki elektronik iletileri almaktan vazgeçebilir, verdiğiniz onayı geri alabilirsiniz. Bu talebinizi Şirketimize çağrı veya iletide yer alan iletişim bilgilerini kullanarak veya Şirketimiz bilgilerindeki iletişim adreslerine ücretsiz olarak iletebilirsiniz.")
+
+  // Legal Policies
+  privacyPolicyText   String   @default("MKBL Otomotiv Gizlilik Politikası:\n\n1. Veri Sorumlusu: MKBL Otomotiv A.Ş. olarak kişisel verilerinizin güvenliğine önem veriyoruz.\n2. Toplanan Veriler: İletişim, test sürüşü ve servis randevusu formları aracılığıyla ad, soyad, telefon ve e-posta bilgileriniz işlenmektedir.\n3. Veri Kullanım Amacı: Taleplerinizin yanıtlanması, randevu oluşturulması ve yetkili temsilcilerimiz tarafından bilgilendirme yapılması amacıyla kullanılır.\n4. Üçüncü Taraflar: Verileriniz yasal zorunluluklar dışında üçüncü taraf kurum veya kuruluşlarla asla paylaşılmaz.")
+  termsOfUseText      String   @default("MKBL Otomotiv Kullanım Şartları:\n\n1. Genel Kullanım: Bu web sitesinde yer alan tüm içerikler, görseller ve teknik özellikler MKBL Otomotiv A.Ş.'ye aittir.\n2. Test Sürüşü ve Randevu: Web sitemiz üzerinden iletilen test sürüşü ve servis randevu talepleri teyit sürecine tabidir.\n3. Fiyat ve Teknik Bilgiler: Sitede sunulan fiyatlar ve araç teknik özellikleri bilgilendirme amaçlı olup değişiklik gösterebilir.")
+  kvkkText            String   @default("KVKK Aydınlatma Metni (6698 Sayılı Kanun):\n\n6698 Sayılı Kişisel Verilerin Korunması Kanunu uyarınca, MKBL Otomotiv A.Ş. tarafından kişisel verilerinizin işlenme amaçları, aktarıldığı kişiler, toplama yöntemi ve hukuki sebebi hakkında bilgilendirilmektesiniz.\n\nKişisel Verileri İşleme Haklarınız:\n- Verilerinizin işlenip işlenmediğini öğrenme,\n- İşlenmişse buna ilişkin bilgi talep etme,\n- Verilerin silinmesini veya düzeltilmesini isteme haklarına sahipsiniz.")
+  
+  // Cookie Consent & KVKK Settings
+  showCookieBanner    Boolean  @default(true)
+  cookieBannerText    String   @default("Sitemizde kullanıcı deneyimini iyileştirmek, içerikleri kişiselleştirmek ve trafik analizlerini gerçekleştirmek amacıyla 6698 Sayılı KVKK ve GDPR standartlarına uygun çerezler (cookies) kullanmaktayız.")
+  cookiePolicyText    String   @default("MKBL Otomotiv Çerez (Cookie) Politikası ve KVKK Bilgilendirmesi:\n\n1. Çerezlerin Kullanım Amacı: Web sitemizde gezintinizi kolaylaştırmak, oturum tercihlerinizi saklamak, web sitesi kullanım istatistiklerini analiz etmek ve size özel promosyonlar sunmak amacıyla çerezler kullanılmaktadır.\n\n2. Çerez Türleri:\n- Zorunlu Çerezler: Sitenin temel işlevlerinin ve güvenlik protokollerinin çalışması için gereklidir.\n- Analitik Çerezler: Ziyaretçi trafiğini ve sayfa etkileşimlerini anonim olarak ölçümlememize yarar.\n- Pazarlama Çerezleri: İlgi alanlarınıza yönelik reklam ve sosyal medya reklam etiketlerini yönetir.\n\n3. Tercihlerin Yönetimi: Dilediğiniz zaman Çerez Ayarları panelinden tercihlerinizi güncelleyebilirsiniz.")
+
+  // Analytics & Tracking Codes
+  googleTagManagerId  String   @default("")
+  googleAdsId         String   @default("")
+  metaPixelId         String   @default("")
+  customHeadScripts   String   @default("")
+  customBodyScripts   String   @default("")
+
+  // SMTP Email Settings
+  smtpHost            String   @default("")
+  smtpPort            Int      @default(587)
+  smtpUser            String   @default("")
+  smtpPass            String   @default("")
+  smtpSender          String   @default("bildirim@mkbloto.com")
+  smtpEnableSsl       Boolean  @default(false)
+
+  // Homepage Sections Layout & Visibility Settings
+  homeShowHero          Boolean  @default(true)
+  homeOrderHero         Int      @default(1)
+  homeShowGallery       Boolean  @default(true)
+  homeOrderGallery      Int      @default(2)
+  homeShowCalculator    Boolean  @default(true)
+  homeOrderCalculator   Int      @default(3)
+  homeShowConfigurator  Boolean  @default(true)
+  homeOrderConfigurator Int      @default(4)
+  homeShowFeatures      Boolean  @default(true)
+  homeOrderFeatures     Int      @default(5)
+
+  // Site Maintenance Mode Settings
+  isMaintenanceMode        Boolean  @default(false)
+  maintenanceTitle         String   @default("Sitemiz Bakımdadır")
+  maintenanceSubtitle      String   @default("Sizlere daha iyi hizmet verebilmek için sitemizde güncelleme ve bakım çalışmaları yapılmaktadır. En kısa sürede tekrar yayında olacağız.")
+  maintenanceEstimatedTime String   @default("Tahmini Süre: 1-2 Saat")
+
+  updatedAt           DateTime @default(now()) @updatedAt
+}
+
+model CustomPage {
+  id              String   @id @default(uuid())
+  slug            String   @unique
+  title           String
+  path            String
+  metaTitle       String?
+  metaDescription String?
+  ogImage         String?
+  content         String?
+  isPublished     Boolean  @default(true)
+  isIndexable     Boolean  @default(true)
+  pageType        String   @default("SİSTEM") // SİSTEM, MODEL, ÖZEL
+  cmsTabTarget    String?  // homepage, showroom, service, contact, legal, tracking, vehicles
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+model AdminUser {
+  id          String   @id @default(uuid())
+  username    String   @unique
+  fullName    String
+  email       String?
+  password    String   // Hashed or encrypted password string
+  role        String   @default("YÖNETİCİ") // SÜPER ADMİN, YÖNETİCİ, EDİTÖR, SATIŞ, MÜŞTERİ İLİŞKİLERİ, SSH
+  title       String?  @default("Yönetici") // Ünvan (örn: Satış Danışmanı, SSH Yöneticisi, Müşteri İlişkileri Temsilcisi)
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model GallerySlide {
+  id          String   @id @default(uuid())
+  vehicleId   String?  @default("karea-fit")
+  title       String
+  subtitle    String?
+  description String?
+  tagText     String?  @default("Karea Özel Donanım")
+  imageUrl    String
+  order       Int      @default(0)
+  isPublished Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+
+
