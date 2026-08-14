@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MKBL Otomotiv - IT Sunucu Kurulum & Canlıya Alma Rehberi</title>
+  <title>MKBL Otomotiv - cPanel & Linux Sunucu Kurulum Kılavuzu</title>
   <style>
     :root {
       --primary: #0284c7;
@@ -14,8 +14,6 @@
       --text-muted: #334155;
       --accent: #0284c7;
       --border: #cbd5e1;
-      --code-bg: #0f172a;
-      --code-text: #38bdf8;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
@@ -146,36 +144,20 @@
     <header>
       <div>
         <h1>MKBL Otomotiv <span class="badge">IT SUNUCU & CANLIYA ALMA REHBERİ</span></h1>
-        <p style="margin: 4px 0 0 0; color: #475569; font-weight: 500;">Gizli GitHub Depo Erişimi (SSH Deploy Key), Domain (mkbloto.com) & SMTP Ayarları</p>
+        <p style="margin: 4px 0 0 0; color: #475569; font-weight: 500;">cPanel Node.js Hosting (Türkticaret.Net), GitHub Entegrasyonu, Domain & SMTP Ayarları</p>
       </div>
       <button class="btn-print" onclick="window.print()">🖨️ Yazdır / PDF Olarak Kaydet</button>
     </header>
 
-    <!-- 1. GİZLİ GİTHUB DEPO ERİŞİMİ & SSH DEPLOY KEY -->
+    <!-- 1. GİTHUB DEPOSU VE BAĞLANTI -->
     <section>
-      <h2>1. Gizli GitHub Depo Erişimi (Private Repo & SSH Deploy Key)</h2>
+      <h2>1. GitHub Deposu (CI/CD Workflow)</h2>
       <p>
-        Projenin kaynak kodları güvenlik amacıyla GitHub üzerinde <strong>Private (Gizli)</strong> depoda tutulmaktadır. Depo kamuya açılmadan sunucunun otomatik kod çekebilmesi için <strong>SSH Deploy Key (Önerilen)</strong> kullanılır:
+        Projenin kaynak kodları GitHub üzerinde barındırılmaktadır. Bu sayede yazılım ekibi bir güncelleme yaptığında sunucunuzda sadece <code>git pull</code> çalıştırarak 3 saniyede canlı siteyi güncelleyebilirsiniz.
       </p>
-
-      <div class="alert-box">
-        🔒 <strong>GÜVENLİK AVANTAJI:</strong> Bu yöntem sayesinde kodlarınız dış dünyaya %100 kapalı (Gizli) kalır. Sunucuya tanımlanan sadece okunabilir (Read-Only) SSH anahtarı ile tüm güncellemeler otomatik olarak sunucuya aktarılır.
-      </div>
-
       <div class="step-box">
-        <h4>Adım 1.1: GitHub Depo Adresleri</h4>
-        <ul>
-          <li><strong>HTTPS URL:</strong> <code>https://github.com/basaransosyal/mkbl-otomotiv.git</code></li>
-          <li><strong>SSH Clone URL (Önerilen):</strong> <code>git@github.com:basaransosyal/mkbl-otomotiv.git</code></li>
-        </ul>
-      </div>
-
-      <div class="step-box">
-        <h4>Adım 1.2: IT Ekibinin Sunucuda SSH Anahtarı Üretmesi</h4>
-        <p>IT ekibi Linux sunucuda şu komutla sunucuya özel okuma anahtarı oluşturur:</p>
-        <pre>ssh-keygen -t ed25519 -C "mkbl-server-deploy"
-cat ~/.ssh/id_ed25519.pub</pre>
-        <p style="margin-top: 10px;">Çıkan genel anahtarı (<code>ssh-ed25519 ...</code>) proje sahibine iletirler. Proje sahibi bu anahtarı GitHub reponun <code>Settings ➔ Deploy keys ➔ Add deploy key</code> kısmına ekler.</p>
+        <h4>📦 GitHub Depo Adresi:</h4>
+        <pre>https://github.com/basaransosyal/mkbl-otomotiv.git</pre>
       </div>
     </section>
 
@@ -199,7 +181,7 @@ cat ~/.ssh/id_ed25519.pub</pre>
             <td><code>A Kaydı</code></td>
             <td><code>@ (mkbloto.com)</code></td>
             <td><code>SUNUCU_IP_ADRESINIZ</code></td>
-            <td>Sunucunuzun Statik IP adresi</td>
+            <td>Hosting IP adresi</td>
           </tr>
           <tr>
             <td><code>CNAME</code></td>
@@ -217,21 +199,38 @@ cat ~/.ssh/id_ed25519.pub</pre>
       </table>
     </section>
 
-    <!-- 3. LINUX VPS / NGINX / PM2 ADIM ADIM KURULUM -->
+    <!-- 3. CPANEL NODE.JS HOSTING ADIM ADIM KURULUM KILAVUZU (TÜRKTİCARET.NET) -->
     <section>
-      <h2>3. Linux Sunucu Adım Adım Kurulum Kılavuzu</h2>
+      <h2>3. cPanel Node.js Hosting Adım Adım Kurulum Kılavuzu (Türkticaret.Net)</h2>
+      <p>
+        Türkticaret.Net üzerindeki <strong>Python/Node.js Hosting cPanel</strong> paketi üzerinden canlıya alma adımları:
+      </p>
       
       <div class="step-box">
-        <h4>Adım 3.1: Gizli GitHub Depoundan Projeyi Çekme</h4>
-        <pre>cd /var/www
-git clone git@github.com:basaransosyal/mkbl-otomotiv.git mkbloto
-cd mkbloto
-npm install --production=false</pre>
+        <h4>Adım 3.1: cPanel'de Node.js Uygulaması Oluşturma</h4>
+        <ol>
+          <li>cPanel kontrol paneline giriş yapın.</li>
+          <li><strong>Software (Yazılım)</strong> kategorisi altındaki <strong>"Setup Node.js App"</strong> menüsüne tıklayın.</li>
+          <li><strong>"Create Application"</strong> butonuna basın.</li>
+          <li><strong>Node.js Version:</strong> <code>20.x</code> veya <code>18.x</code> seçin.</li>
+          <li><strong>Application Mode:</strong> <code>Production</code> seçin.</li>
+          <li><strong>Application Root:</strong> <code>mkbloto</code> (proje klasör adı) girin.</li>
+          <li><strong>Application URL:</strong> <code>mkbloto.com</code> alan adını seçin.</li>
+          <li><strong>Create</strong> butonuna basarak uygulamayı oluşturun.</li>
+        </ol>
       </div>
 
       <div class="step-box">
-        <h4>Adım 3.2: Ortam Değişkenleri (.env) Dosyasını Oluşturma</h4>
-        <p>Proje kök dizininde <code>.env</code> dosyasını oluşturun ve kaydedin:</p>
+        <h4>Adım 3.2: Kodları cPanel'e Yükleme / GitHub'dan Çekme</h4>
+        <p>cPanel <strong>Terminal</strong> menüsünden veya <strong>Git Version Control</strong> aracından:</p>
+        <pre>cd /home/kullaniciadi/public_html
+git clone https://github.com/basaransosyal/mkbl-otomotiv.git .</pre>
+        <p style="margin-top: 6px;">Veya hazırladığımız <code>MKBL_Web_Site_Sunucu_Kurulum_Paketi.zip</code> dosyasını cPanel File Manager ile ana dizine yükleyip <strong>Extract</strong> edin.</p>
+      </div>
+
+      <div class="step-box">
+        <h4>Adım 3.3: Ortam Değişkenleri (.env) Dosyasını Oluşturma</h4>
+        <p>Proje dizininde <code>.env</code> dosyasını oluşturun ve kaydedin:</p>
         <pre># Canlı Domain URL
 NEXT_PUBLIC_SITE_URL=https://mkbloto.com
 
@@ -248,47 +247,37 @@ SMTP_ENABLE_SSL="true"</pre>
       </div>
 
       <div class="step-box">
-        <h4>Adım 3.3: Veritabanını Oluşturma & Üretim Derlemesi (Build)</h4>
-        <pre># SQLite veritabanı tablolarını ve seed verilerini yükler
-npx prisma db push
-
-# Next.js canlı üretim derlemesini basar
+        <h4>Adım 3.4: Bağımlılıkları Yükleme & Build İşlemi</h4>
+        <ol>
+          <li>cPanel <strong>Setup Node.js App</strong> ekranındaki <strong>"Run NPM Install"</strong> butonuna basın.</li>
+          <li>cPanel Terminal ekranında veritabanını ve canlı sürümü derleyin:
+            <pre>npx prisma db push
 npm run build</pre>
-      </div>
-
-      <div class="step-box">
-        <h4>Adım 3.4: PM2 Process Manager İle Servisi Başlatma</h4>
-        <pre>pm2 start npm --name "mkbl-web" -- start -- -p 3000
-pm2 save
-pm2 startup</pre>
-      </div>
-
-      <div class="step-box">
-        <h4>Adım 3.5: Nginx Reverse Proxy & Certbot SSL Kurulumu</h4>
-        <pre># /etc/nginx/sites-available/mkbloto.com dosyası oluşturun:
-server {
-    server_name mkbloto.com www.mkbloto.com;
-
-    location / {
-        proxy_pass http://localhost:3000;
-        proxy_http_version 1.1;
-        proxy_set_header Upgrade $http_upgrade;
-        proxy_set_header Connection 'upgrade';
-        proxy_set_header Host $host;
-        proxy_cache_bypass $http_upgrade;
-    }
-}
-
-# Nginx aktif edip Ücretsiz Let's Encrypt SSL sertifikasını yükleyin:
-sudo ln -s /etc/nginx/sites-available/mkbloto.com /etc/nginx/sites-enabled/
-sudo nginx -t && sudo systemctl reload nginx
-sudo certbot --nginx -d mkbloto.com -d www.mkbloto.com</pre>
+          </li>
+          <li>cPanel sayfasındaki <strong>"Restart Application"</strong> butonuna basarak uygulamayı canlıda başlatın.</li>
+        </ol>
       </div>
     </section>
 
-    <!-- 4. E-MAİL / SMTP KURUMSAL MAIL SUNUCUSU AYARLARI -->
+    <!-- 4. LINUX VPS / UNUMTU KURULUM KILAVUZU (ALTERNATİF) -->
     <section>
-      <h2>4. E-Posta (SMTP) Ayarları & Canlı Panel Yapılandırması</h2>
+      <h2>4. Linux VPS Sunucu Kurulum Kılavuzu (Alternatif / Dedicated)</h2>
+      <div class="step-box">
+        <h4>Ubuntu / Linux VPS Üzerinde PM2 & Nginx İle Çalıştırma:</h4>
+        <pre>cd /var/www
+git clone https://github.com/basaransosyal/mkbl-otomotiv.git mkbloto
+cd mkbloto
+npm install --production=false
+npx prisma db push
+npm run build
+pm2 start npm --name "mkbl-web" -- start -- -p 3000
+pm2 save && pm2 startup</pre>
+      </div>
+    </section>
+
+    <!-- 5. E-MAİL / SMTP KURUMSAL MAIL SUNUCUSU AYARLARI -->
+    <section>
+      <h2>5. E-Posta (SMTP) Ayarları & Canlı Panel Yapılandırması</h2>
       <p>
         Müşterilerinizin Web Siteden (Servis Randevusu, Test Sürüşü ve Showroom İletişim Formları) gönderdiği maillerin kurumsal kutunuza (<code>info@mkbloto.com</code>) düşmesi için 2 yöntem bulunur:
       </p>
@@ -309,7 +298,7 @@ sudo certbot --nginx -d mkbloto.com -d www.mkbloto.com</pre>
         </thead>
         <tbody>
           <tr>
-            <td><strong>Kurumsal cPanel Mail</strong></td>
+            <td><strong>Türkticaret / cPanel Mail</strong></td>
             <td><code>mail.mkbloto.com</code></td>
             <td><code>465</code> veya <code>587</code></td>
             <td>SSL / TLS</td>
@@ -333,9 +322,9 @@ sudo certbot --nginx -d mkbloto.com -d www.mkbloto.com</pre>
       </table>
     </section>
 
-    <!-- 5. YÖNETİCİ GİRİŞİ VE OTOMATİK GÜNCELLEME PROSEDÜRÜ -->
+    <!-- 6. YÖNETİCİ GİRİŞİ VE OTOMATİK GÜNCELLEME PROSEDÜRÜ -->
     <section>
-      <h2>5. Canlı Admin Paneli & Aracısız Otomatik Güncelleme Prosedürü</h2>
+      <h2>6. Canlı Admin Paneli & Güncelleme Prosedürü</h2>
       <ul>
         <li><strong>Canlı Admin Paneli URL:</strong> <code>https://mkbloto.com/admin</code></li>
         <li><strong>Varsayılan Kullanıcı Adı:</strong> <code>admin</code></li>
@@ -343,11 +332,11 @@ sudo certbot --nginx -d mkbloto.com -d www.mkbloto.com</pre>
       </ul>
 
       <div class="step-box" style="margin-top: 16px;">
-        <h4>🔄 Sitede Bir Güncelleme Yapıldığında IT Ekibinin Komutları (Aracısız & Otomatik):</h4>
-        <pre>cd /var/www/mkbloto
+        <h4>🔄 Sitede Bir Güncelleme Yapıldığında IT Ekibinin Komutları:</h4>
+        <pre>cd /home/kullaniciadi/public_html
 git pull origin main
-npm run build
-pm2 restart mkbl-web</pre>
+npm run build</pre>
+        <p style="margin-top: 6px;">veya cPanel <strong>Setup Node.js App</strong> ekranındaki <strong>"Restart Application"</strong> butonuna basılması yeterlidir.</p>
       </div>
     </section>
   </div>
