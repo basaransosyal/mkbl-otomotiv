@@ -203,7 +203,7 @@ export const DEFAULT_SITE_SETTINGS: ISiteSettings = {
 
   heroTitle: 'Bindiğin Gibi Değil. Karea Fit',
   heroSubtitle: 'Var olan bir sınıftan değil, yeni bir sınıfın ilki. %100 elektrikli Karea Fit, bugün şehir hayatına tam uyum sağlamak için tasarlandı.',
-  heroBadge: 'MKBL Otomotiv Güvencesiyle %100 Elektrikli',
+  heroBadge: '🎉 CANLI YAYIN TESTİ BAŞARILI | MKBL Otomotiv %100 Elektrikli',
   ctaButtonText: 'Test Sürüşü Randevusu Al',
   ctaButtonUrl: '/models/karea-fit',
 
