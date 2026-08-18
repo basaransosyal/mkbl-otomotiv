@@ -605,7 +605,7 @@ export default function VisualPageBuilder() {
       <header className="h-16 bg-[#0B1426] border-b border-slate-800 px-4 sm:px-6 flex items-center justify-between z-50 relative shrink-0">
         <div className="flex items-center space-x-4">
           <Link
-            href="/admin/pages"
+            href="/mkbl-kontrol-77/pages"
             className="px-3 py-1.5 rounded-xl bg-white/5 hover:bg-white/10 text-gray-300 hover:text-white border border-slate-700 text-xs font-semibold flex items-center space-x-1.5 transition-all"
           >
             <ChevronLeft className="w-4 h-4 text-blue-400" />

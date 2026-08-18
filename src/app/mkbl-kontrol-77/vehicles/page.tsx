@@ -420,7 +420,7 @@ export default function AdminVehiclesPage() {
           </p>
         </div>
         <Link
-          href="/admin"
+          href="/mkbl-kontrol-77"
           className="inline-flex items-center space-x-2 px-6 py-3 rounded-2xl bg-gradient-to-r from-blue-600 to-sky-400 text-white text-xs font-bold shadow-lg"
         >
           <ChevronLeft className="w-4 h-4" />
@@ -436,7 +436,7 @@ export default function AdminVehiclesPage() {
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-blue-500/20 pb-6">
         <div>
           <Link
-            href="/admin/settings"
+            href="/mkbl-kontrol-77/settings"
             className="inline-flex items-center space-x-2 px-4 py-2 rounded-xl bg-white/5 hover:bg-blue-600/30 text-gray-300 hover:text-white border border-blue-500/30 transition-all text-xs font-semibold shadow-md mb-3"
           >
             <ChevronLeft className="w-4 h-4 text-blue-400" />

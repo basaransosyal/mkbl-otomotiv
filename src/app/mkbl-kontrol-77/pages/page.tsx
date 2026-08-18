@@ -215,7 +215,7 @@ export default function AdminPagesPage() {
           </p>
         </div>
         <Link
-          href="/admin"
+          href="/mkbl-kontrol-77"
           className="inline-flex items-center space-x-2 px-6 py-3 rounded-2xl bg-gradient-to-r from-blue-600 to-sky-400 text-white text-xs font-bold shadow-lg"
         >
           <ChevronLeft className="w-4 h-4" />
@@ -231,7 +231,7 @@ export default function AdminPagesPage() {
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-blue-500/20 pb-6">
         <div>
           <Link
-            href="/admin/settings"
+            href="/mkbl-kontrol-77/settings"
             className="inline-flex items-center space-x-2 px-4 py-2 rounded-xl bg-white/5 hover:bg-blue-600/30 text-gray-300 hover:text-white border border-blue-500/30 transition-all text-xs font-semibold shadow-md mb-3"
           >
             <ChevronLeft className="w-4 h-4 text-blue-400" />
@@ -272,7 +272,7 @@ export default function AdminPagesPage() {
       {/* QUICK MANAGEMENT SHORTCUT CARDS */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         <Link
-          href="/admin/settings?tab=homepage"
+          href="/mkbl-kontrol-77/settings?tab=homepage"
           className="glass-panel p-4 rounded-2xl border border-sky-500/30 hover:border-sky-400/60 transition-all group flex items-center justify-between"
         >
           <div className="flex items-center space-x-3">
@@ -288,7 +288,7 @@ export default function AdminPagesPage() {
         </Link>
 
         <Link
-          href="/admin/vehicles"
+          href="/mkbl-kontrol-77/vehicles"
           className="glass-panel p-4 rounded-2xl border border-blue-500/30 hover:border-blue-400/60 transition-all group flex items-center justify-between"
         >
           <div className="flex items-center space-x-3">
@@ -304,7 +304,7 @@ export default function AdminPagesPage() {
         </Link>
 
         <Link
-          href="/admin/settings?tab=calculator"
+          href="/mkbl-kontrol-77/settings?tab=calculator"
           className="glass-panel p-4 rounded-2xl border border-emerald-500/30 hover:border-emerald-400/60 transition-all group flex items-center justify-between"
         >
           <div className="flex items-center space-x-3">
@@ -480,7 +480,7 @@ export default function AdminPagesPage() {
                       </Link>
 
                       <Link
-                        href={`/admin/pages/builder/${p.id}`}
+                        href={`/mkbl-kontrol-77/pages/builder/${p.id}`}
                         className="px-2.5 py-1.5 bg-gradient-to-r from-purple-600 to-indigo-600 text-white hover:from-purple-500 hover:to-indigo-500 rounded-lg transition-colors text-xs font-bold inline-flex items-center space-x-1 border border-purple-500/40 shadow-sm"
                         title="Görsel Sürükle-Bırak Sayfa Düzenleyiciyi Aç"
                       >
@@ -490,7 +490,7 @@ export default function AdminPagesPage() {
 
                       {p.cmsTabTarget && (
                         <Link
-                          href={`/admin/settings?tab=${p.cmsTabTarget}`}
+                          href={`/mkbl-kontrol-77/settings?tab=${p.cmsTabTarget}`}
                           className="px-2.5 py-1.5 bg-blue-600/20 text-blue-300 hover:bg-blue-600 hover:text-white rounded-lg transition-colors text-xs font-semibold inline-flex items-center space-x-1 border border-blue-500/30"
                           title="Bu Sayfanın CMS Modülünü Aç"
                         >

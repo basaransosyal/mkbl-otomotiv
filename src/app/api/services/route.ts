@@ -51,7 +51,7 @@ export async function POST(req: Request) {
           { label: 'Randevu Tarihi & Saat', value: `${created.appointmentDate} / ${created.appointmentTime}` },
         ],
         notes: created.userNotes,
-        adminLink: `${origin}/admin/services`,
+        adminLink: `${origin}/mkbl-kontrol-77/services`,
       }).catch((e) => console.error('Service email dispatch error:', e));
 
       return NextResponse.json(created, { status: 201 });

@@ -51,7 +51,7 @@ export async function POST(req: Request) {
           { label: 'Lokasyon / Şehir', value: created.city },
         ],
         notes: created.notes,
-        adminLink: `${origin}/admin/test-drives`,
+        adminLink: `${origin}/mkbl-kontrol-77/test-drives`,
       }).catch((e) => console.error('Test drive email dispatch error:', e));
 
       return NextResponse.json(created, { status: 201 });

@@ -82,7 +82,7 @@ export default async function RootLayout({
 }) {
   const headersList = headers();
   const pathname = headersList.get('x-pathname') || '';
-  const isAdminRoute = pathname.startsWith('/admin') || pathname.startsWith('/api');
+  const isAdminRoute = pathname.startsWith('/mkbl-kontrol-77') || pathname.startsWith('/api');
 
   let isMaintenance = false;
   let settingsData: any = null;

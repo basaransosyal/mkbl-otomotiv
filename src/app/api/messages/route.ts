@@ -44,7 +44,7 @@ export async function POST(req: Request) {
           { label: 'Mesaj Konusu', value: created.subject },
         ],
         notes: created.message,
-        adminLink: `${origin}/admin/messages`,
+        adminLink: `${origin}/mkbl-kontrol-77/messages`,
       }).catch((e) => console.error('Contact email dispatch error:', e));
 
       return NextResponse.json(created, { status: 201 });

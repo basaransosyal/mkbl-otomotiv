@@ -202,20 +202,8 @@ export default function Footer() {
 
           {/* Copyright & Discreet Admin Link (Placed UNDERNEATH copyright text, visible on hover) */}
           <div className="pt-8 flex flex-col sm:flex-row items-start sm:items-center justify-between text-xs text-gray-500">
-            <div className="flex flex-col space-y-1.5 group cursor-pointer">
+            <div className="flex flex-col space-y-1.5 cursor-pointer">
               <p>{settings.copyrightText}</p>
-              {settings.footerAdminLinkActive !== false && (
-                <div>
-                  <Link
-                    href={settings.footerAdminLinkUrl !== undefined ? settings.footerAdminLinkUrl : '/admin'}
-                    className="inline-flex opacity-0 group-hover:opacity-100 hover:opacity-100 transition-opacity duration-300 text-gray-400 hover:text-blue-400 items-center space-x-1 text-[11px] font-semibold py-0.5 px-2 rounded-lg bg-white/5 border border-white/10"
-                    title="Yönetim Paneli"
-                  >
-                    <ShieldCheck className="w-3.5 h-3.5 text-blue-400" />
-                    <span>{settings.footerAdminLinkText || 'Yönetim Paneli (Admin)'}</span>
-                  </Link>
-                </div>
-              )}
             </div>
 
             <div className="flex flex-wrap gap-4 sm:gap-6 mt-4 sm:mt-0 font-medium items-center">

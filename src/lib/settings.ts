@@ -237,8 +237,8 @@ export const DEFAULT_SITE_SETTINGS: ISiteSettings = {
   footerServiceLink4Url: '/contact',
   footerServiceLink4Active: true,
   footerAdminLinkText: 'Yönetim Paneli Oturumu',
-  footerAdminLinkUrl: '/admin',
-  footerAdminLinkActive: true,
+  footerAdminLinkUrl: '/mkbl-kontrol-77',
+  footerAdminLinkActive: false,
 
   calcTitle: 'Benzine Karşı Katlarca Yakıt Tasarrufu',
   calcSubtitle: 'Aylık ortalama kaç kilometre yol yaptığınızı seçin, Karea Fit ile her yıl ne kadar tasarruf edeceğinizi hesaplayın.',

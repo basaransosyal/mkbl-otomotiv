@@ -94,7 +94,7 @@ export default function MaintenanceScreen({ settings }: MaintenanceScreenProps) 
         <p>{settings.copyrightText || '© 2026 MKBL Otomotiv A.Ş. Tüm hakları saklıdır.'}</p>
 
         <Link
-          href="/admin"
+          href="/mkbl-kontrol-77"
           className="text-gray-400 hover:text-blue-400 flex items-center space-x-1.5 text-xs font-semibold px-3 py-1.5 rounded-xl bg-white/5 border border-white/10 hover:border-blue-500/40 transition-all"
         >
           <ShieldCheck className="w-4 h-4 text-blue-400" />
