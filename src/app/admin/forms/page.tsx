@@ -79,7 +79,7 @@ export default function AdminFormsSettingsPage() {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-blue-500/20 pb-6">
         <div>
           <Link
-            href="/mkbl-kontrol-77"
+            href="/admin"
             className="inline-flex items-center space-x-2 px-4 py-2 rounded-xl bg-white/5 hover:bg-blue-600/30 text-gray-300 hover:text-white border border-blue-500/30 transition-all text-xs font-semibold shadow-md mb-3"
           >
             <ChevronLeft className="w-4 h-4 text-blue-400" />

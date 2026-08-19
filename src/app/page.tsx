@@ -68,12 +68,6 @@ export default function HomePage() {
       isVisible: settings.homeShowHero !== false,
       render: () => (
         <section key="hero" className="relative flex items-center justify-center pt-24 pb-4 overflow-hidden bg-grid-pattern">
-          {/* Live Test Banner */}
-          <div className="absolute top-2 left-1/2 -translate-x-1/2 z-20 bg-gradient-to-r from-emerald-600 to-teal-500 text-white px-6 py-1.5 rounded-full text-xs font-extrabold shadow-lg shadow-emerald-500/30 flex items-center space-x-2">
-            <Sparkles className="w-4 h-4 text-emerald-200 animate-pulse" />
-            <span>🎉 CANLI YAYIN TESTİ BAŞARILI — MKBL OTOMOTİV</span>
-          </div>
-
           {/* Blue Glow Spheres */}
           <div className="absolute top-1/4 left-10 w-[500px] h-[500px] bg-blue-600/15 rounded-full blur-[140px] pointer-events-none"></div>
           <div className="absolute bottom-10 right-10 w-[450px] h-[450px] bg-sky-500/10 rounded-full blur-[140px] pointer-events-none"></div>
