@@ -114,7 +114,7 @@ export default function Vehicle360Viewer({ vehicle, colors: customColors, onColo
   };
 
   return (
-    <div className="glass-panel p-6 sm:p-10 rounded-3xl border border-blue-500/20 space-y-8 select-none">
+    <div className="glass-panel p-3.5 sm:p-10 rounded-3xl border border-blue-500/20 space-y-6 sm:space-y-8 select-none">
       {/* Header Info */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/10 pb-6">
         <div>
@@ -122,7 +122,7 @@ export default function Vehicle360Viewer({ vehicle, colors: customColors, onColo
             <RotateCw className="w-3.5 h-3.5 animate-spin-slow text-blue-400" />
             <span>360° Etkileşimli Araç Görünümü</span>
           </div>
-          <h2 className="text-2xl sm:text-3xl font-extrabold text-white font-['Outfit'] mt-2">
+          <h2 className="text-xl sm:text-3xl font-extrabold text-white font-['Outfit'] mt-2">
             Karea Fit Renk & Açı Konfigüratörü
           </h2>
           <p className="text-xs text-gray-400 mt-1">
@@ -131,7 +131,7 @@ export default function Vehicle360Viewer({ vehicle, colors: customColors, onColo
         </div>
 
         {/* Mobile Swipe Guidance Badge */}
-        <div className="hidden sm:flex items-center space-x-2 px-4 py-2 rounded-2xl bg-white/5 border border-white/10 text-xs text-gray-300">
+        <div className="flex sm:flex items-center space-x-2 px-3 py-1.5 sm:px-4 sm:py-2 rounded-2xl bg-white/5 border border-white/10 text-xs text-gray-300 w-fit">
           <MoveHorizontal className="w-4 h-4 text-blue-400" />
           <span>Sağa / Sola Kaydırarak Çevirin</span>
         </div>
@@ -139,7 +139,7 @@ export default function Vehicle360Viewer({ vehicle, colors: customColors, onColo
 
       {/* MAIN 360 DISPLAY BOX */}
       <div
-        className="relative aspect-[16/10] sm:aspect-[16/9] w-full max-w-4xl mx-auto rounded-3xl overflow-hidden bg-gradient-to-b from-[#0F1C38] via-[#091122] to-[#040710] border border-blue-500/30 shadow-2xl flex items-center justify-center group cursor-grab active:cursor-grabbing"
+        className="relative aspect-[4/3] sm:aspect-[16/9] min-h-[280px] sm:min-h-[420px] w-full max-w-4xl mx-auto rounded-2xl sm:rounded-3xl overflow-hidden bg-gradient-to-b from-[#0F1C38] via-[#091122] to-[#040710] border border-blue-500/30 shadow-2xl flex items-center justify-center group cursor-grab active:cursor-grabbing"
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
@@ -155,22 +155,22 @@ export default function Vehicle360Viewer({ vehicle, colors: customColors, onColo
         {totalAngles > 0 && !imageError ? (
           <>
             {/* Top Floating Overhead 360 Indicator */}
-            <div className="absolute top-4 left-4 z-10 px-3.5 py-1.5 rounded-full bg-black/60 backdrop-blur-md border border-blue-500/30 text-[11px] font-semibold text-white flex items-center space-x-2">
-              <RotateCw className="w-3.5 h-3.5 text-blue-400" />
+            <div className="absolute top-2.5 sm:top-4 left-2.5 sm:left-4 z-10 px-2.5 sm:px-3.5 py-1 sm:py-1.5 rounded-full bg-black/75 backdrop-blur-md border border-blue-500/30 text-[10px] sm:text-[11px] font-semibold text-white flex items-center space-x-1.5">
+              <RotateCw className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-blue-400" />
               <span>Açı {currentAngleIndex + 1} / {totalAngles}</span>
             </div>
 
             {/* Active Color Badge */}
-            <div className="absolute top-4 right-4 z-10 px-3.5 py-1.5 rounded-full bg-black/60 backdrop-blur-md border border-blue-500/30 text-[11px] font-semibold text-blue-300">
+            <div className="absolute top-2.5 sm:top-4 right-2.5 sm:right-4 z-10 px-2.5 sm:px-3.5 py-1 sm:py-1.5 rounded-full bg-black/75 backdrop-blur-md border border-blue-500/30 text-[10px] sm:text-[11px] font-semibold text-blue-300">
               {currentColor?.badge || currentColor?.name}
             </div>
 
-            <div className="relative w-full h-full p-4 sm:p-8 flex items-center justify-center">
+            <div className="relative w-full h-full p-1 sm:p-6 flex items-center justify-center">
               <Image
                 src={angleImages[currentAngleIndex] || angleImages[0]}
                 alt={`Karea Fit - ${currentColor?.name || ''} - Açı ${currentAngleIndex + 1}`}
                 fill
-                className="object-contain p-4 transition-all duration-300 pointer-events-none"
+                className="object-contain p-0.5 sm:p-2 transition-all duration-300 pointer-events-none scale-105 sm:scale-100"
                 priority
                 onError={() => setImageError(true)}
               />
@@ -183,10 +183,10 @@ export default function Vehicle360Viewer({ vehicle, colors: customColors, onColo
                     e.stopPropagation();
                     handlePrevAngle();
                   }}
-                  className="absolute left-4 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full bg-black/60 hover:bg-blue-600/80 text-white flex items-center justify-center border border-white/20 hover:border-blue-400 transition-all backdrop-blur-md shadow-lg"
+                  className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 z-20 w-8 h-8 sm:w-11 sm:h-11 rounded-full bg-black/70 hover:bg-blue-600/80 text-white flex items-center justify-center border border-white/20 hover:border-blue-400 transition-all backdrop-blur-md shadow-lg"
                   title="Önceki Açı"
                 >
-                  <ChevronLeft className="w-6 h-6" />
+                  <ChevronLeft className="w-4 h-4 sm:w-6 sm:h-6" />
                 </button>
 
                 <button
@@ -194,10 +194,10 @@ export default function Vehicle360Viewer({ vehicle, colors: customColors, onColo
                     e.stopPropagation();
                     handleNextAngle();
                   }}
-                  className="absolute right-4 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full bg-black/60 hover:bg-blue-600/80 text-white flex items-center justify-center border border-white/20 hover:border-blue-400 transition-all backdrop-blur-md shadow-lg"
+                  className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 z-20 w-8 h-8 sm:w-11 sm:h-11 rounded-full bg-black/70 hover:bg-blue-600/80 text-white flex items-center justify-center border border-white/20 hover:border-blue-400 transition-all backdrop-blur-md shadow-lg"
                   title="Sonraki Açı"
                 >
-                  <ChevronRight className="w-6 h-6" />
+                  <ChevronRight className="w-4 h-4 sm:w-6 sm:h-6" />
                 </button>
               </>
             )}

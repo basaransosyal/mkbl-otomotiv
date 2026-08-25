@@ -150,8 +150,8 @@ export default function TestDriveModal({
 
   return (
     <>
-      <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md transition-opacity overflow-y-auto">
-        <div className="relative w-full max-w-lg glass-panel rounded-3xl p-6 sm:p-8 border border-blue-500/30 shadow-2xl shadow-blue-950/50 overflow-hidden my-8">
+      <div className="fixed inset-0 z-[100] p-3 sm:p-6 overflow-y-auto flex justify-center items-start sm:items-center pt-20 sm:pt-8 pb-12 bg-black/80 backdrop-blur-md transition-opacity">
+        <div className="relative w-full max-w-lg glass-panel rounded-3xl p-5 sm:p-8 border border-blue-500/30 shadow-2xl shadow-blue-950/50 overflow-hidden my-auto">
           {/* Close Button */}
           <button
             onClick={onClose}

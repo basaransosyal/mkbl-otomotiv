@@ -215,17 +215,17 @@ export default function VehicleGallerySlider({
                   transform: `translateX(${translateX}px) scale(${scale}) rotateY(${rotateY}deg)`,
                   opacity: opacity,
                   zIndex: zIndex,
-                  width: 'min(90vw, 360px)',
-                  height: '420px',
+                  width: 'min(88vw, 340px)',
+                  height: '450px',
                 }}
               >
                 {/* Image Section */}
-                <div className="relative w-full h-[250px] sm:h-[270px] bg-[#0A1122]">
+                <div className="relative w-full h-[230px] sm:h-[260px] bg-[#0A1122]">
                   <Image
                     src={slide.imageUrl || '/images/karea_official_1.jpg'}
                     alt={slide.title}
                     fill
-                    sizes="(max-width: 768px) 90vw, 360px"
+                    sizes="(max-width: 768px) 88vw, 340px"
                     className="object-cover transition-transform duration-700 hover:scale-105"
                     priority={isActive}
                   />
@@ -233,19 +233,19 @@ export default function VehicleGallerySlider({
 
                   {/* Top Badge */}
                   {slide.subtitle && (
-                    <div className="absolute top-3 left-3 bg-[#080D1A]/80 backdrop-blur-md text-blue-400 border border-blue-500/30 text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider">
+                    <div className="absolute top-3 left-3 max-w-[85%] truncate bg-[#080D1A]/80 backdrop-blur-md text-blue-400 border border-blue-500/30 text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider">
                       {slide.subtitle}
                     </div>
                   )}
                 </div>
 
                 {/* Content Section (Attached below card) */}
-                <div className="p-5 bg-[#080D1A]/95 border-t border-blue-500/20 space-y-2 flex flex-col justify-between h-[150px]">
+                <div className="p-4 sm:p-5 bg-[#080D1A]/95 border-t border-blue-500/20 space-y-2 flex flex-col justify-between h-[220px] sm:h-[190px]">
                   <div>
-                    <h3 className="text-base sm:text-lg font-bold text-white font-['Outfit'] line-clamp-1 group-hover:text-blue-400 transition-colors">
+                    <h3 className="text-sm sm:text-base font-bold text-white font-['Outfit'] line-clamp-2 group-hover:text-blue-400 transition-colors leading-snug">
                       {slide.title}
                     </h3>
-                    <p className="text-xs text-gray-300 leading-relaxed line-clamp-3 mt-1">
+                    <p className="text-xs text-gray-300 leading-relaxed line-clamp-3 mt-1.5">
                       {slide.description}
                     </p>
                   </div>
