@@ -14,6 +14,9 @@ const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://mkbloto.com';
 
 export const metadata: Metadata = {
   metadataBase: new URL(baseUrl),
+  verification: {
+    google: 'xvfBxviX8tw5rzOJuUGr42nw5tqFS9UhDv2v4wESFIc',
+  },
   title: {
     default: 'MKBL Otomotiv | Kepez Showroom & Elektrikli Araçlar',
     template: '%s | MKBL Otomotiv',
@@ -152,6 +155,7 @@ export default async function RootLayout({
   return (
     <html lang="tr" className="dark">
       <head>
+        <meta name="google-site-verification" content="xvfBxviX8tw5rzOJuUGr42nw5tqFS9UhDv2v4wESFIc" />
         <TrackingScripts />
         <script
           type="application/ld+json"
