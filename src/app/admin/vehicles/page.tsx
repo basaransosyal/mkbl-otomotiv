@@ -24,8 +24,8 @@ import {
   Lock,
   Check
 } from 'lucide-react';
-import { Vehicle, VehicleColor, normalizeVehiclePrice } from '@/lib/data';
-import { getLoggedInAdminUser, LoggedInAdminUser } from '@/lib/auth';
+import { Vehicle, VehicleColor, normalizeVehiclePrice } from '../../../lib/data';
+import { getLoggedInAdminUser, LoggedInAdminUser } from '../../../lib/auth';
 
 export default function AdminVehiclesPage() {
   const [vehicles, setVehicles] = useState<Vehicle[]>([]);

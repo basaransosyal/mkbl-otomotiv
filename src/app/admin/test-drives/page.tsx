@@ -18,9 +18,9 @@ import {
   ShieldAlert,
   X
 } from 'lucide-react';
-import { TestDriveRequest } from '@/lib/data';
-import { exportToCSV, exportToExcel } from '@/lib/exportUtils';
-import { getLoggedInAdminUser, isSuperAdminUser, LoggedInAdminUser } from '@/lib/auth';
+import { TestDriveRequest } from '../../../lib/data';
+import { exportToCSV, exportToExcel } from '../../../lib/exportUtils';
+import { getLoggedInAdminUser, isSuperAdminUser, LoggedInAdminUser } from '../../../lib/auth';
 
 export default function AdminTestDrivesPage() {
   const [testDrives, setTestDrives] = useState<TestDriveRequest[]>([]);

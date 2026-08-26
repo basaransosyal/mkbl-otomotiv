@@ -14,7 +14,7 @@ import {
   FileText,
   Info
 } from 'lucide-react';
-import { ISiteSettings, DEFAULT_SITE_SETTINGS } from '@/lib/settings';
+import { ISiteSettings, DEFAULT_SITE_SETTINGS } from '../../../lib/settings';
 
 export default function AdminFormsSettingsPage() {
   const [formData, setFormData] = useState<ISiteSettings>(DEFAULT_SITE_SETTINGS);

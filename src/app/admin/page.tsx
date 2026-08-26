@@ -22,8 +22,8 @@ import {
   FileCheck,
   ImageIcon
 } from 'lucide-react';
-import { Vehicle, TestDriveRequest, ServiceAppointment, ContactMessage } from '@/lib/data';
-import { isAdminAuthenticated, setAdminAuth, clearAdminAuth, getLoggedInAdminUser, LoggedInAdminUser } from '@/lib/auth';
+import { Vehicle, TestDriveRequest, ServiceAppointment, ContactMessage } from '../../lib/data';
+import { isAdminAuthenticated, setAdminAuth, clearAdminAuth, getLoggedInAdminUser, LoggedInAdminUser } from '../../lib/auth';
 
 export default function AdminDashboardPage() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);

@@ -19,9 +19,9 @@ import {
   ShieldAlert,
   X
 } from 'lucide-react';
-import { ContactMessage } from '@/lib/data';
-import { exportToCSV, exportToExcel } from '@/lib/exportUtils';
-import { getLoggedInAdminUser, isSuperAdminUser, LoggedInAdminUser } from '@/lib/auth';
+import { ContactMessage } from '../../../lib/data';
+import { exportToCSV, exportToExcel } from '../../../lib/exportUtils';
+import { getLoggedInAdminUser, isSuperAdminUser, LoggedInAdminUser } from '../../../lib/auth';
 
 export default function AdminMessagesPage() {
   const [messages, setMessages] = useState<ContactMessage[]>([]);

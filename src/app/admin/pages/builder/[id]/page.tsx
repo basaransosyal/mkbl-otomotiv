@@ -53,12 +53,12 @@ import {
   FileText,
   RefreshCw
 } from 'lucide-react';
-import BankCard from '@/components/BankCard';
-import CostCalculator from '@/components/CostCalculator';
-import VehicleGallerySlider from '@/components/VehicleGallerySlider';
-import Vehicle360Viewer from '@/components/Vehicle360Viewer';
-import { INITIAL_VEHICLES } from '@/lib/data';
-import { ISiteSettings, DEFAULT_SITE_SETTINGS } from '@/lib/settings';
+import BankCard from '../../../../../components/BankCard';
+import CostCalculator from '../../../../../components/CostCalculator';
+import VehicleGallerySlider from '../../../../../components/VehicleGallerySlider';
+import Vehicle360Viewer from '../../../../../components/Vehicle360Viewer';
+import { INITIAL_VEHICLES } from '../../../../../lib/data';
+import { ISiteSettings, DEFAULT_SITE_SETTINGS } from '../../../../../lib/settings';
 
 export interface IPageBlock {
   id: string;

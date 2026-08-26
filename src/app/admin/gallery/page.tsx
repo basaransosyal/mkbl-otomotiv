@@ -22,8 +22,8 @@ import {
   ArrowDown,
   GripVertical
 } from 'lucide-react';
-import { GallerySlideItem, Vehicle } from '@/lib/data';
-import { getLoggedInAdminUser, LoggedInAdminUser } from '@/lib/auth';
+import { GallerySlideItem, Vehicle } from '../../../lib/data';
+import { getLoggedInAdminUser, LoggedInAdminUser } from '../../../lib/auth';
 
 export default function AdminGalleryPage() {
   const [slides, setSlides] = useState<GallerySlideItem[]>([]);

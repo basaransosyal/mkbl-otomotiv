@@ -29,7 +29,7 @@ import {
   Wrench,
   Briefcase
 } from 'lucide-react';
-import { getLoggedInAdminUser, LoggedInAdminUser } from '@/lib/auth';
+import { getLoggedInAdminUser, LoggedInAdminUser } from '../../../lib/auth';
 
 export interface AdminUserItem {
   id: string;

@@ -25,7 +25,7 @@ import {
   ArrowRight,
   Lock
 } from 'lucide-react';
-import { getLoggedInAdminUser, LoggedInAdminUser } from '@/lib/auth';
+import { getLoggedInAdminUser, LoggedInAdminUser } from '../../../lib/auth';
 
 export interface CustomPageItem {
   id: string;

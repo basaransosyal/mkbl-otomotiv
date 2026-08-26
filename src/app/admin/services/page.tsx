@@ -19,9 +19,9 @@ import {
   ShieldAlert,
   X
 } from 'lucide-react';
-import { ServiceAppointment } from '@/lib/data';
-import { exportToCSV, exportToExcel } from '@/lib/exportUtils';
-import { getLoggedInAdminUser, isSuperAdminUser, LoggedInAdminUser } from '@/lib/auth';
+import { ServiceAppointment } from '../../../lib/data';
+import { exportToCSV, exportToExcel } from '../../../lib/exportUtils';
+import { getLoggedInAdminUser, isSuperAdminUser, LoggedInAdminUser } from '../../../lib/auth';
 
 export default function AdminServicesPage() {
   const [services, setServices] = useState<ServiceAppointment[]>([]);

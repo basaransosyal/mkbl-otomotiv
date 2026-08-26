@@ -34,8 +34,8 @@ import {
   Power,
   AlertTriangle
 } from 'lucide-react';
-import { ISiteSettings, DEFAULT_SITE_SETTINGS } from '@/lib/settings';
-import { getLoggedInAdminUser, LoggedInAdminUser } from '@/lib/auth';
+import { ISiteSettings, DEFAULT_SITE_SETTINGS } from '../../../lib/settings';
+import { getLoggedInAdminUser, LoggedInAdminUser } from '../../../lib/auth';
 
 export default function AdminSettingsPage() {
   const [activeTab, setActiveTab] = useState<'homepage' | 'nav' | 'showroom' | 'service' | 'calculator' | 'whatsapp' | 'contact' | 'legal' | 'tracking' | 'maintenance'>('homepage');
