@@ -149,17 +149,17 @@ export default function VehicleGallerySlider({
   }
 
   return (
-    <div className="glass-panel rounded-3xl p-6 sm:p-10 border border-blue-500/20 relative overflow-hidden space-y-8 select-none">
+    <div className="glass-panel rounded-3xl p-2.5 sm:p-10 px-1.5 sm:px-10 border border-blue-500/20 relative overflow-hidden space-y-6 sm:space-y-8 select-none">
       {/* Background Ambient Glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[350px] bg-blue-600/10 rounded-full blur-[140px] pointer-events-none"></div>
 
       {/* Header */}
-      <div className="text-center max-w-3xl mx-auto space-y-2 relative z-10">
+      <div className="text-center max-w-3xl mx-auto space-y-2 relative z-10 px-3">
         <div className="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-blue-950/60 border border-blue-500/30 text-blue-400 text-xs font-semibold uppercase tracking-wider">
           <ImageIcon className="w-3.5 h-3.5" />
           <span>Modeller & Donanım Detayları</span>
         </div>
-        <h2 className="text-3xl sm:text-4xl font-extrabold text-white font-['Outfit']">
+        <h2 className="text-2xl sm:text-4xl font-extrabold text-white font-['Outfit']">
           {title}
         </h2>
         <p className="text-xs sm:text-sm text-gray-300 leading-relaxed max-w-xl mx-auto">
@@ -169,7 +169,7 @@ export default function VehicleGallerySlider({
 
       {/* 3D CAROUSEL CONTAINER */}
       <div
-        className="relative w-full py-8 min-h-[480px] sm:min-h-[520px] flex items-center justify-center cursor-grab active:cursor-grabbing overflow-hidden"
+        className="relative w-full py-4 sm:py-8 min-h-[460px] sm:min-h-[520px] flex items-center justify-center cursor-grab active:cursor-grabbing overflow-hidden"
         onMouseDown={(e) => handleDragStart(e.clientX)}
         onMouseMove={(e) => handleDragMove(e.clientX)}
         onMouseUp={handleDragEnd}
@@ -178,7 +178,7 @@ export default function VehicleGallerySlider({
         onTouchMove={(e) => handleDragMove(e.touches[0].clientX)}
         onTouchEnd={handleDragEnd}
       >
-        <div className="relative w-full max-w-5xl h-[420px] sm:h-[460px] flex items-center justify-center perspective-[1200px]">
+        <div className="relative w-full max-w-5xl h-[440px] sm:h-[460px] flex items-center justify-center perspective-[1200px]">
           {slides.map((slide, index) => {
             // Calculate relative offset from activeIndex
             const count = slides.length;
@@ -190,11 +190,11 @@ export default function VehicleGallerySlider({
             const isActive = offset === 0;
 
             // Compute 3D Styles
-            const translateX = offset * 260 + (isActive ? dragOffset * 0.3 : 0);
-            const scale = isActive ? 1.05 : Math.max(0.75, 1 - absOffset * 0.15);
-            const opacity = isActive ? 1 : Math.max(0.2, 1 - absOffset * 0.35);
+            const translateX = offset * 240 + (isActive ? dragOffset * 0.3 : 0);
+            const scale = isActive ? 1.02 : Math.max(0.72, 1 - absOffset * 0.18);
+            const opacity = isActive ? 1 : Math.max(0.15, 1 - absOffset * 0.4);
             const zIndex = 30 - absOffset * 10;
-            const rotateY = offset * -12;
+            const rotateY = offset * -8;
 
             // Hide cards beyond 2 steps away
             if (absOffset > 2 && count > 4) return null;
@@ -215,17 +215,17 @@ export default function VehicleGallerySlider({
                   transform: `translateX(${translateX}px) scale(${scale}) rotateY(${rotateY}deg)`,
                   opacity: opacity,
                   zIndex: zIndex,
-                  width: 'min(88vw, 340px)',
-                  height: '450px',
+                  width: 'min(86vw, 320px)',
+                  height: '440px',
                 }}
               >
                 {/* Image Section */}
-                <div className="relative w-full h-[230px] sm:h-[260px] bg-[#0A1122]">
+                <div className="relative w-full h-[220px] sm:h-[250px] bg-[#0A1122]">
                   <Image
                     src={slide.imageUrl || '/images/karea_official_1.jpg'}
                     alt={slide.title}
                     fill
-                    sizes="(max-width: 768px) 88vw, 340px"
+                    sizes="(max-width: 768px) 86vw, 320px"
                     className="object-cover transition-transform duration-700 hover:scale-105"
                     priority={isActive}
                   />
@@ -240,7 +240,7 @@ export default function VehicleGallerySlider({
                 </div>
 
                 {/* Content Section (Attached below card) */}
-                <div className="p-4 sm:p-5 bg-[#080D1A]/95 border-t border-blue-500/20 space-y-2 flex flex-col justify-between h-[220px] sm:h-[190px]">
+                <div className="p-4 sm:p-5 px-5 bg-[#080D1A]/95 border-t border-blue-500/20 space-y-2 flex flex-col justify-between h-[220px] sm:h-[190px]">
                   <div>
                     <h3 className="text-sm sm:text-base font-bold text-white font-['Outfit'] line-clamp-2 group-hover:text-blue-400 transition-colors leading-snug">
                       {slide.title}

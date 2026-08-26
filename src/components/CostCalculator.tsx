@@ -167,9 +167,11 @@ export default function CostCalculator({ initialSettings }: CostCalculatorProps)
             
             {/* CUSTOM VEHICLE SLIDER TRACK */}
             <div className="space-y-4 p-6 rounded-3xl bg-[#0D1527] border border-blue-500/20 relative">
-              <div className="flex items-center justify-between text-sm">
-                <span className="text-gray-300 font-semibold">Aylık Sürüş Mesafesi:</span>
-                <span className="text-2xl font-extrabold text-blue-400 font-['Outfit']">{monthlyKm.toLocaleString('tr-TR')} km</span>
+              <div className="flex items-center justify-between text-xs sm:text-sm min-h-[40px] gap-2">
+                <span className="text-gray-300 font-semibold shrink-0 whitespace-nowrap">Aylık Sürüş Mesafesi:</span>
+                <span className="text-xl sm:text-2xl font-extrabold text-blue-400 font-['Outfit'] font-mono whitespace-nowrap shrink-0 min-w-[110px] text-right">
+                  {monthlyKm.toLocaleString('tr-TR')} km
+                </span>
               </div>
 
               {/* CUSTOM CAR THUMB SLIDER CONTAINER */}

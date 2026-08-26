@@ -151,28 +151,27 @@ export default function HomePage() {
 
               {/* Right Hero Image Card */}
               <div className="lg:col-span-6 relative">
-                <div className="relative aspect-[4/3] w-full rounded-3xl overflow-hidden glass-panel p-2 border border-blue-500/30 shadow-2xl shadow-blue-950/80 group">
-                  <div className="relative w-full h-full rounded-2xl overflow-hidden bg-gradient-to-b from-[#0F1C38] to-[#080E1C]">
+                <div className="rounded-3xl glass-panel p-3 border border-blue-500/30 shadow-2xl shadow-blue-950/80 group flex flex-col space-y-3">
+                  <div className="relative aspect-[16/10] sm:aspect-[4/3] w-full rounded-2xl overflow-hidden bg-gradient-to-b from-[#0F1C38] to-[#080E1C] flex items-center justify-center">
                     <Image
                       src={activeVehicle.images[0] || '/images/karea_official_hero.jpg'}
                       alt={activeVehicle.name}
                       fill
-                      className="object-contain p-4 group-hover:scale-105 transition-transform duration-700"
+                      className="object-contain p-2 sm:p-4 group-hover:scale-105 transition-transform duration-700"
                       priority
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#0B0F17] via-transparent to-transparent opacity-60"></div>
-                    
-                    {/* Floating Price Badge */}
-                    <div className="absolute bottom-6 left-6 right-6 p-4 rounded-2xl bg-[#091122]/90 backdrop-blur-md border border-blue-500/30 flex items-center justify-between">
-                      <div>
-                        <div className="text-[10px] uppercase font-semibold text-blue-400">{activeVehicle.name} - Başlangıç Fiyatı</div>
-                        <div className="text-xl font-bold text-white font-['Outfit']">
-                          ₺{activeVehicle.price.toLocaleString('tr-TR')}
-                        </div>
+                  </div>
+                  
+                  {/* Clean Price Badge Box Below Car */}
+                  <div className="p-4 rounded-2xl bg-[#091122]/95 backdrop-blur-md border border-blue-500/30 flex items-center justify-between">
+                    <div>
+                      <div className="text-[10px] uppercase font-semibold text-blue-400">{activeVehicle.name} - Başlangıç Fiyatı</div>
+                      <div className="text-xl font-bold text-white font-['Outfit']">
+                        ₺{activeVehicle.price.toLocaleString('tr-TR')}
                       </div>
-                      <div className="px-3 py-1.5 rounded-xl bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 text-xs font-semibold">
-                        {activeVehicle.stockStatus}
-                      </div>
+                    </div>
+                    <div className="px-3 py-1.5 rounded-xl bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 text-xs font-semibold">
+                      {activeVehicle.stockStatus}
                     </div>
                   </div>
                 </div>
