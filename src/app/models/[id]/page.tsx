@@ -15,13 +15,13 @@ import {
   PhoneCall,
   Building2
 } from 'lucide-react';
-import TestDriveModal from '@/components/TestDriveModal';
-import Vehicle360Viewer from '@/components/Vehicle360Viewer';
-import CostCalculator from '@/components/CostCalculator';
-import VehicleGallerySlider from '@/components/VehicleGallerySlider';
-import BankCard from '@/components/BankCard';
-import { Vehicle, INITIAL_VEHICLES } from '@/lib/data';
-import { ISiteSettings, DEFAULT_SITE_SETTINGS } from '@/lib/settings';
+import TestDriveModal from '../../../components/TestDriveModal';
+import Vehicle360Viewer from '../../../components/Vehicle360Viewer';
+import CostCalculator from '../../../components/CostCalculator';
+import VehicleGallerySlider from '../../../components/VehicleGallerySlider';
+import BankCard from '../../../components/BankCard';
+import { Vehicle, INITIAL_VEHICLES } from '../../../lib/data';
+import { ISiteSettings, DEFAULT_SITE_SETTINGS } from '../../../lib/settings';
 
 const FULL_DEFAULT_FEATURES = [
   'Çelik Kafes Şasi Güvenlik Yapısı',

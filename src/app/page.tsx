@@ -17,12 +17,12 @@ import {
   Shield,
   Check
 } from 'lucide-react';
-import TestDriveModal from '@/components/TestDriveModal';
-import CostCalculator from '@/components/CostCalculator';
-import Vehicle360Viewer from '@/components/Vehicle360Viewer';
-import VehicleGallerySlider from '@/components/VehicleGallerySlider';
-import { Vehicle, INITIAL_VEHICLES } from '@/lib/data';
-import { ISiteSettings, DEFAULT_SITE_SETTINGS } from '@/lib/settings';
+import TestDriveModal from '../components/TestDriveModal';
+import CostCalculator from '../components/CostCalculator';
+import Vehicle360Viewer from '../components/Vehicle360Viewer';
+import VehicleGallerySlider from '../components/VehicleGallerySlider';
+import { Vehicle, INITIAL_VEHICLES } from '../lib/data';
+import { ISiteSettings, DEFAULT_SITE_SETTINGS } from '../lib/settings';
 
 export default function HomePage() {
   const [vehiclesList, setVehiclesList] = useState<Vehicle[]>(INITIAL_VEHICLES);

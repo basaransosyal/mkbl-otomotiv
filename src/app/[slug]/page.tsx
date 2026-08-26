@@ -2,14 +2,14 @@ import React from 'react';
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
-import { prisma } from '@/lib/prisma';
-import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
-import BankCard from '@/components/BankCard';
-import CostCalculator from '@/components/CostCalculator';
-import Vehicle360Viewer from '@/components/Vehicle360Viewer';
-import VehicleGallerySlider from '@/components/VehicleGallerySlider';
-import { INITIAL_VEHICLES } from '@/lib/data';
+import { prisma } from '../../lib/prisma';
+import Navbar from '../../components/Navbar';
+import Footer from '../../components/Footer';
+import BankCard from '../../components/BankCard';
+import CostCalculator from '../../components/CostCalculator';
+import Vehicle360Viewer from '../../components/Vehicle360Viewer';
+import VehicleGallerySlider from '../../components/VehicleGallerySlider';
+import { INITIAL_VEHICLES } from '../../lib/data';
 import {
   ChevronRight,
   Sparkles,

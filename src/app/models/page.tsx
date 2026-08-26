@@ -4,8 +4,8 @@ import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { BatteryCharging, Gauge, Zap, Check, ChevronRight, Shield } from 'lucide-react';
-import TestDriveModal from '@/components/TestDriveModal';
-import { Vehicle, INITIAL_VEHICLES } from '@/lib/data';
+import TestDriveModal from '../../components/TestDriveModal';
+import { Vehicle, INITIAL_VEHICLES } from '../../lib/data';
 
 export default function ModelsPage() {
   const [vehicle, setVehicle] = useState<Vehicle>(INITIAL_VEHICLES[0]);

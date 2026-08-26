@@ -11,8 +11,8 @@ import {
   Building2,
   Navigation
 } from 'lucide-react';
-import { ISiteSettings, DEFAULT_SITE_SETTINGS } from '@/lib/settings';
-import ConsentModal from '@/components/ConsentModal';
+import { ISiteSettings, DEFAULT_SITE_SETTINGS } from '../../lib/settings';
+import ConsentModal from '../../components/ConsentModal';
 
 export default function ContactPage() {
   const [settings, setSettings] = useState<ISiteSettings>(DEFAULT_SITE_SETTINGS);

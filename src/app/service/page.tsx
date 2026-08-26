@@ -14,8 +14,8 @@ import {
   CheckCircle,
 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
-import { ISiteSettings, DEFAULT_SITE_SETTINGS } from '@/lib/settings';
-import ConsentModal from '@/components/ConsentModal';
+import { ISiteSettings, DEFAULT_SITE_SETTINGS } from '../../lib/settings';
+import ConsentModal from '../../components/ConsentModal';
 
 export default function ServicePage() {
   const router = useRouter();
