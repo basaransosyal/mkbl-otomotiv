@@ -98,10 +98,10 @@ export default function CostCalculator({ initialSettings }: CostCalculatorProps)
   };
 
   return (
-    <div className="glass-panel rounded-3xl p-6 sm:p-10 border border-blue-500/20 relative overflow-hidden">
+    <div className="glass-panel rounded-3xl p-3.5 sm:p-10 px-3 sm:px-10 border border-blue-500/20 relative overflow-hidden">
       <div className="absolute top-0 right-0 w-80 h-80 bg-blue-600/10 rounded-full blur-3xl pointer-events-none"></div>
 
-      <div className="space-y-8">
+      <div className="space-y-6 sm:space-y-8">
         {/* TOP HEADER TITLE */}
         <div>
           <div className="flex flex-wrap items-center gap-2.5 mb-2">
@@ -119,17 +119,17 @@ export default function CostCalculator({ initialSettings }: CostCalculatorProps)
         </div>
 
         {/* RESPONSIVE FLEX/GRID: MOBILE HAS SAVINGS BOX FIRST, DESKTOP HAS SLIDER LEFT & SAVINGS RIGHT */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 items-start">
           
           {/* SAVINGS BOX (FIRST ON MOBILE ORDER-1, RIGHT ON DESKTOP ORDER-2) */}
           <div className="order-1 lg:order-2 lg:col-span-5 w-full">
-            <div className="p-6 sm:p-8 rounded-3xl bg-gradient-to-b from-blue-950/80 via-[#0A1224] to-[#050914] border border-blue-500/40 text-center space-y-6 shadow-2xl relative">
+            <div className="p-4 sm:p-8 px-4 sm:px-8 rounded-3xl bg-gradient-to-b from-blue-950/80 via-[#0A1224] to-[#050914] border border-blue-500/40 text-center space-y-5 sm:space-y-6 shadow-2xl relative">
               <div className="w-12 h-12 rounded-2xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center mx-auto border border-emerald-500/40">
                 <PiggyBank className="w-6 h-6" />
               </div>
 
               <div>
-                <div className="text-xs uppercase font-semibold tracking-widest text-emerald-400">Tahmini Yıllık Tasarrufunuz</div>
+                <div className="text-[11px] sm:text-xs uppercase font-semibold tracking-widest text-emerald-400">Tahmini Yıllık Tasarrufunuz</div>
                 <div className="text-3xl sm:text-4xl font-extrabold text-white font-['Outfit'] mt-1">
                   ₺{Math.round(yearlySavings).toLocaleString('tr-TR')}
                 </div>
@@ -138,23 +138,23 @@ export default function CostCalculator({ initialSettings }: CostCalculatorProps)
                 </div>
               </div>
 
-              <div className="grid grid-cols-2 gap-3 pt-2 border-t border-white/10 text-xs">
-                <div className="p-3 rounded-xl bg-blue-950/40 border border-blue-500/20">
-                  <div className="flex items-center justify-center space-x-1 text-blue-400 font-semibold mb-1">
+              <div className="grid grid-cols-2 gap-2.5 sm:gap-3 pt-2 border-t border-white/10 text-xs">
+                <div className="p-2.5 sm:p-3 rounded-xl bg-blue-950/40 border border-blue-500/20">
+                  <div className="flex items-center justify-center space-x-1 text-blue-400 font-semibold mb-1 text-[11px] sm:text-xs">
                     <Plug className="w-3.5 h-3.5" />
                     <span>220V Karea Fit</span>
                   </div>
-                  <div className="text-sm font-bold text-white font-mono">
+                  <div className="text-xs sm:text-sm font-bold text-white font-mono">
                     ₺{Math.round(monthlyEvCost).toLocaleString('tr-TR')}/ay
                   </div>
                 </div>
 
-                <div className="p-3 rounded-xl bg-red-950/20 border border-red-500/20">
-                  <div className="flex items-center justify-center space-x-1 text-red-400 font-semibold mb-1">
+                <div className="p-2.5 sm:p-3 rounded-xl bg-red-950/20 border border-red-500/20">
+                  <div className="flex items-center justify-center space-x-1 text-red-400 font-semibold mb-1 text-[11px] sm:text-xs">
                     <Fuel className="w-3.5 h-3.5" />
                     <span>Benzinli Araç</span>
                   </div>
-                  <div className="text-sm font-bold text-gray-300 font-mono">
+                  <div className="text-xs sm:text-sm font-bold text-gray-300 font-mono">
                     ₺{Math.round(monthlyGasCost).toLocaleString('tr-TR')}/ay
                   </div>
                 </div>
@@ -166,7 +166,7 @@ export default function CostCalculator({ initialSettings }: CostCalculatorProps)
           <div className="order-2 lg:order-1 lg:col-span-7 space-y-6 w-full">
             
             {/* CUSTOM VEHICLE SLIDER TRACK */}
-            <div className="space-y-4 p-6 rounded-3xl bg-[#0D1527] border border-blue-500/20 relative">
+            <div className="space-y-4 p-4 sm:p-6 px-4 sm:px-6 rounded-3xl bg-[#0D1527] border border-blue-500/20 relative">
               <div className="flex items-center justify-between text-xs sm:text-sm min-h-[40px] gap-2">
                 <span className="text-gray-300 font-semibold shrink-0 whitespace-nowrap">Aylık Sürüş Mesafesi:</span>
                 <span className="text-xl sm:text-2xl font-extrabold text-blue-400 font-['Outfit'] font-mono whitespace-nowrap shrink-0 min-w-[110px] text-right">

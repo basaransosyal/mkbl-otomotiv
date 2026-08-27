@@ -128,7 +128,7 @@ export default function VehicleDetailPage({ params }: { params: { id: string } }
       : FULL_DEFAULT_FEATURES;
 
   return (
-    <div className="pt-28 pb-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+    <div className="pt-24 sm:pt-28 pb-20 max-w-7xl mx-auto px-2.5 sm:px-6 lg:px-8 space-y-8 sm:space-y-12">
       {/* Back Button */}
       <div>
         <Link
@@ -172,7 +172,7 @@ export default function VehicleDetailPage({ params }: { params: { id: string } }
 
       {/* IF CUSTOM VISUAL BUILDER BLOCKS EXIST */}
       {customBlocks.length > 0 ? (
-        <div className="grid grid-cols-12 gap-6">
+        <div className="grid grid-cols-12 gap-4 sm:gap-6">
           {customBlocks.map((block: any, index: number) => {
             const bgClass =
               block.bgTheme === 'emerald'
@@ -187,10 +187,10 @@ export default function VehicleDetailPage({ params }: { params: { id: string } }
               block.borderRadius === 'lg' ? 'rounded-xl' : 'rounded-3xl';
             const paddingClass =
               block.paddingSize === 'small'
-                ? 'p-4 sm:p-5'
+                ? 'p-3.5 sm:p-5'
                 : block.paddingSize === 'large'
-                ? 'p-8 sm:p-12'
-                : 'p-6 sm:p-8';
+                ? 'p-4 sm:p-12'
+                : 'p-3.5 sm:p-8';
             const colSpanClass =
               block.width === 'half'
                 ? 'col-span-12 md:col-span-6'
