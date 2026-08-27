@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { headers } from 'next/headers';
+import { Inter, Outfit } from 'next/font/google';
 import './globals.css';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
@@ -9,6 +10,18 @@ import WhatsAppWidget from '@/components/WhatsAppWidget';
 import MaintenanceScreen from '@/components/MaintenanceScreen';
 import { prisma } from '@/lib/prisma';
 import { DEFAULT_SITE_SETTINGS } from '@/lib/settings';
+
+const inter = Inter({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-inter',
+});
+
+const outfit = Outfit({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-outfit',
+});
 
 const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://mkbloto.com';
 
@@ -85,7 +98,7 @@ export default async function RootLayout({
 }) {
   const headersList = headers();
   const pathname = headersList.get('x-pathname') || '';
-  const isAdminRoute = pathname.startsWith('/mkbl-kontrol-77') || pathname.startsWith('/api');
+  const isAdminRoute = pathname.startsWith('/admin') || pathname.startsWith('/api');
 
   let isMaintenance = false;
   let settingsData: any = null;
@@ -103,7 +116,7 @@ export default async function RootLayout({
   if (isMaintenance && !isAdminRoute) {
     const activeSettings = { ...DEFAULT_SITE_SETTINGS, ...(settingsData || {}) };
     return (
-      <html lang="tr" className="dark">
+      <html lang="tr" className={`dark ${inter.variable} ${outfit.variable}`}>
         <head>
           <title>{activeSettings.maintenanceTitle || 'Sitemiz Bakımdadır'} | MKBL Otomotiv</title>
         </head>
@@ -153,7 +166,7 @@ export default async function RootLayout({
   };
 
   return (
-    <html lang="tr" className="dark">
+    <html lang="tr" className={`dark ${inter.variable} ${outfit.variable}`}>
       <head>
         <meta name="google-site-verification" content="xvfBxviX8tw5rzOJuUGr42nw5tqFS9UhDv2v4wESFIc" />
         <TrackingScripts />
