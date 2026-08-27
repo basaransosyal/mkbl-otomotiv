@@ -150,8 +150,26 @@ export default function AdminTestDrivesPage() {
 
   // Export functions
   const getExportData = () => {
-    const headers = ['Müşteri Adı', 'Şehir/Lokasyon', 'Telefon', 'E-Posta', 'Model', 'Randevu Tarihi', 'Saat', 'Müşteri Notu', 'Durum'];
-    const rows = filtered.map((td) => [
+    const headers = [
+      'Müşteri Adı',
+      'Şehir/Lokasyon',
+      'Telefon',
+      'E-Posta',
+      'Model',
+      'Randevu Tarihi',
+      'Saat',
+      'Müşteri Notu',
+      'Durum',
+      'Giriş URL (Landing URL)',
+      'UTM Source',
+      'UTM Medium',
+      'UTM Campaign',
+      'UTM Term',
+      'UTM Content',
+      'GCLID',
+      'FBCLID'
+    ];
+    const rows = filtered.map((td: any) => [
       td.fullName,
       td.city,
       td.phone,
@@ -160,7 +178,15 @@ export default function AdminTestDrivesPage() {
       td.preferredDate,
       td.preferredTime,
       td.notes || '',
-      td.status
+      td.status,
+      td.landingUrl || '',
+      td.utmSource || '',
+      td.utmMedium || '',
+      td.utmCampaign || '',
+      td.utmTerm || '',
+      td.utmContent || '',
+      td.gclid || '',
+      td.fbclid || ''
     ]);
     return { headers, rows };
   };

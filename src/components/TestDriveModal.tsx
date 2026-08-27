@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { X, Calendar, Clock, Car, User, Phone, Mail, CheckCircle } from 'lucide-react';
 import ConsentModal from './ConsentModal';
 import { DEFAULT_SITE_SETTINGS } from '@/lib/settings';
+import { getAttributionData, pushDataLayerEvent } from './AttributionTracker';
 
 interface TestDriveModalProps {
   isOpen: boolean;
@@ -110,6 +111,7 @@ export default function TestDriveModal({
     setIsSubmitting(true);
 
     try {
+      const attr = getAttributionData();
       const res = await fetch('/api/test-drives', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -123,10 +125,20 @@ export default function TestDriveModal({
           preferredDate,
           preferredTime,
           notes,
+          ...attr,
         }),
       });
 
       if (res.ok) {
+        // Push GTM DataLayer Custom Event
+        pushDataLayerEvent({
+          event: 'form_submission_success',
+          form_id: 'test_drive_form',
+          landing_url: attr.landing_url || (typeof window !== 'undefined' ? window.location.href : ''),
+          utm_source: attr.utm_source || 'direct',
+          utm_campaign: attr.utm_campaign || 'none',
+        });
+
         setIsSuccess(true);
         setTimeout(() => {
           setIsSuccess(false);

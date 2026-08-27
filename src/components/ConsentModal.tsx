@@ -21,7 +21,7 @@ export default function ConsentModal({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md animate-in fade-in duration-200">
+    <div className="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-black/90 backdrop-blur-md animate-in fade-in duration-200">
       <div className="relative w-full max-w-2xl glass-panel bg-[#0B132B] text-white rounded-3xl p-6 sm:p-8 border border-blue-500/30 shadow-2xl shadow-blue-950/80 space-y-5 max-h-[85vh] flex flex-col">
         {/* Close Button */}
         <button

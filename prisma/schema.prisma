@@ -45,6 +45,15 @@ model TestDriveRequest {
   preferredTime String
   status        String   @default("BEKLEMEDE") // BEKLEMEDE, ARANDI, TAMAMLANDI, İPTAL
   notes         String?
+  // Attribution Tracking Fields
+  landingUrl    String?
+  utmSource     String?
+  utmMedium     String?
+  utmCampaign   String?
+  utmTerm       String?
+  utmContent    String?
+  gclid         String?
+  fbclid        String?
   createdAt     DateTime @default(now())
 }
 
@@ -60,18 +69,36 @@ model ServiceAppointment {
   appointmentTime String
   status          String   @default("BEKLEMEDE") // BEKLEMEDE, ONAYLANDI, TAMAMLANDI, İPTAL
   userNotes       String?
+  // Attribution Tracking Fields
+  landingUrl      String?
+  utmSource       String?
+  utmMedium       String?
+  utmCampaign     String?
+  utmTerm         String?
+  utmContent      String?
+  gclid           String?
+  fbclid          String?
   createdAt       DateTime @default(now())
 }
 
 model ContactMessage {
-  id        String   @id @default(uuid())
-  fullName  String
-  phone     String
-  email     String
-  subject   String
-  message   String
-  status    String   @default("BEKLEMEDE") // BEKLEMEDE, OKUNDU, YANITLANDI, İPTAL
-  createdAt DateTime @default(now())
+  id          String   @id @default(uuid())
+  fullName    String
+  phone       String
+  email       String
+  subject     String
+  message     String
+  status      String   @default("BEKLEMEDE") // BEKLEMEDE, OKUNDU, YANITLANDI, İPTAL
+  // Attribution Tracking Fields
+  landingUrl  String?
+  utmSource   String?
+  utmMedium   String?
+  utmCampaign String?
+  utmTerm     String?
+  utmContent  String?
+  gclid       String?
+  fbclid      String?
+  createdAt   DateTime @default(now())
 }
 
 model SiteSettings {

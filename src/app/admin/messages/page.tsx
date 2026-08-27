@@ -152,15 +152,39 @@ export default function AdminMessagesPage() {
 
   // Export functions
   const getExportData = () => {
-    const headers = ['Müşteri Adı', 'Telefon', 'E-Posta', 'Konu', 'Mesaj Notu', 'Gönderim Tarihi', 'Durum'];
-    const rows = filtered.map((m) => [
+    const headers = [
+      'Müşteri Adı',
+      'Telefon',
+      'E-Posta',
+      'Konu',
+      'Mesaj Notu',
+      'Gönderim Tarihi',
+      'Durum',
+      'Giriş URL (Landing URL)',
+      'UTM Source',
+      'UTM Medium',
+      'UTM Campaign',
+      'UTM Term',
+      'UTM Content',
+      'GCLID',
+      'FBCLID'
+    ];
+    const rows = filtered.map((m: any) => [
       m.fullName,
       m.phone,
       m.email,
       m.subject,
-      m.message,
-      m.createdAt,
-      m.status
+      m.message || '',
+      m.createdAt ? new Date(m.createdAt).toLocaleDateString('tr-TR') : '',
+      m.status,
+      m.landingUrl || '',
+      m.utmSource || '',
+      m.utmMedium || '',
+      m.utmCampaign || '',
+      m.utmTerm || '',
+      m.utmContent || '',
+      m.gclid || '',
+      m.fbclid || ''
     ]);
     return { headers, rows };
   };

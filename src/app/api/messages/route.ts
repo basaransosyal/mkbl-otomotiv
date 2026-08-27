@@ -28,6 +28,14 @@ export async function POST(req: Request) {
           subject: body.subject || 'Showroom İletişim',
           message: body.message || '',
           status: 'BEKLEMEDE',
+          landingUrl: body.landingUrl || body.landing_url || null,
+          utmSource: body.utmSource || body.utm_source || null,
+          utmMedium: body.utmMedium || body.utm_medium || null,
+          utmCampaign: body.utmCampaign || body.utm_campaign || null,
+          utmTerm: body.utmTerm || body.utm_term || null,
+          utmContent: body.utmContent || body.utm_content || null,
+          gclid: body.gclid || null,
+          fbclid: body.fbclid || null,
         },
       });
 

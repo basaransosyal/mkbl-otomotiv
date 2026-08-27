@@ -13,6 +13,7 @@ import {
 } from 'lucide-react';
 import { ISiteSettings, DEFAULT_SITE_SETTINGS } from '../../lib/settings';
 import ConsentModal from '../../components/ConsentModal';
+import { getAttributionData, pushDataLayerEvent } from '@/components/AttributionTracker';
 
 export default function ContactPage() {
   const [settings, setSettings] = useState<ISiteSettings>(DEFAULT_SITE_SETTINGS);
@@ -54,6 +55,7 @@ export default function ContactPage() {
     setIsSubmitting(true);
 
     try {
+      const attr = getAttributionData();
       const res = await fetch('/api/messages', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -63,10 +65,20 @@ export default function ContactPage() {
           phone,
           subject,
           message,
+          ...attr,
         }),
       });
 
       if (res.ok) {
+        // Push GTM DataLayer Custom Event
+        pushDataLayerEvent({
+          event: 'form_submission_success',
+          form_id: 'contact_form',
+          landing_url: attr.landing_url || (typeof window !== 'undefined' ? window.location.href : ''),
+          utm_source: attr.utm_source || 'direct',
+          utm_campaign: attr.utm_campaign || 'none',
+        });
+
         setIsSuccess(true);
         setName('');
         setEmail('');

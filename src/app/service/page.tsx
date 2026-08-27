@@ -16,6 +16,7 @@ import {
 import { useRouter } from 'next/navigation';
 import { ISiteSettings, DEFAULT_SITE_SETTINGS } from '../../lib/settings';
 import ConsentModal from '../../components/ConsentModal';
+import { getAttributionData, pushDataLayerEvent } from '@/components/AttributionTracker';
 
 export default function ServicePage() {
   const router = useRouter();
@@ -95,6 +96,7 @@ export default function ServicePage() {
     setIsSubmitting(true);
 
     try {
+      const attr = getAttributionData();
       const res = await fetch('/api/services', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -108,10 +110,20 @@ export default function ServicePage() {
           appointmentDate,
           appointmentTime,
           userNotes,
+          ...attr,
         }),
       });
 
       if (res.ok) {
+        // Push GTM DataLayer Custom Event
+        pushDataLayerEvent({
+          event: 'form_submission_success',
+          form_id: 'service_form',
+          landing_url: attr.landing_url || (typeof window !== 'undefined' ? window.location.href : ''),
+          utm_source: attr.utm_source || 'direct',
+          utm_campaign: attr.utm_campaign || 'none',
+        });
+
         setIsSuccess(true);
         setFullName('');
         setPhone('');

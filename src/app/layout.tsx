@@ -8,6 +8,7 @@ import TrackingScripts from '@/components/TrackingScripts';
 import CookieConsentBanner from '@/components/CookieConsentBanner';
 import WhatsAppWidget from '@/components/WhatsAppWidget';
 import MaintenanceScreen from '@/components/MaintenanceScreen';
+import AttributionTracker from '@/components/AttributionTracker';
 import { prisma } from '@/lib/prisma';
 import { DEFAULT_SITE_SETTINGS } from '@/lib/settings';
 
@@ -176,6 +177,7 @@ export default async function RootLayout({
         />
       </head>
       <body className="bg-[#0B0F17] text-gray-100 antialiased selection:bg-[#00F0FF] selection:text-black">
+        <AttributionTracker />
         <div className="flex min-h-screen flex-col justify-between">
           {!isAdminRoute && <Navbar />}
           <main className="flex-grow">{children}</main>
