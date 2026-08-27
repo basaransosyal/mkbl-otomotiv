@@ -37,7 +37,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   }).catch(() => []);
 
   const customPageRoutes = customPages
-    .filter((p) => p.path && p.path !== '/' && !p.path.startsWith('/mkbl-kontrol-77'))
+    .filter((p) => p.path && p.path !== '/' && !p.path.startsWith('/admin'))
     .map((p) => ({
       url: `${baseUrl}${p.path.startsWith('/') ? p.path : `/${p.path}`}`,
       lastModified: p.updatedAt.toISOString(),
