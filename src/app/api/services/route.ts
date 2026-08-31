@@ -21,7 +21,7 @@ export async function POST(req: Request) {
 
     try {
       const created = await prisma.serviceAppointment.create({
-        data: {
+        data: ({
           fullName: body.fullName || 'Misafir Müşteri',
           phone: body.phone || '',
           email: body.email || '',
@@ -40,7 +40,7 @@ export async function POST(req: Request) {
           utmContent: body.utmContent || body.utm_content || null,
           gclid: body.gclid || null,
           fbclid: body.fbclid || null,
-        },
+        }) as any,
       });
 
       // Dispatch E-mail to SSH role recipients
