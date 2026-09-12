@@ -1929,6 +1929,34 @@ export default function AdminSettingsPage() {
                   className="w-full bg-[#0D1527] border border-blue-500/20 rounded-xl p-3 text-white focus:outline-none focus:border-blue-500 resize-none font-mono text-xs"
                 ></textarea>
               </div>
+
+              {/* FORM POPUP CONSENT TEXT 1: AÇIK RIZA BEYANI */}
+              <div className="p-4 rounded-2xl bg-[#0D1527] border border-purple-500/30 space-y-2">
+                <label className="block text-xs font-bold text-purple-300">
+                  Form Tik Kutusu: "Kişisel Verilerin İşlenmesine Yönelik Açık Rıza Beyanı" Pop-Up Metni
+                </label>
+                <textarea
+                  rows={6}
+                  value={formData.consentExplicitText || ''}
+                  onChange={(e) => handleChange('consentExplicitText', e.target.value)}
+                  placeholder="Kişisel Verilerin İşlenmesine Yönelik Açık Rıza Beyanı..."
+                  className="w-full bg-[#080D1A] border border-purple-500/30 rounded-xl p-3 text-white focus:outline-none focus:border-purple-500 resize-none font-sans text-xs"
+                ></textarea>
+              </div>
+
+              {/* FORM POPUP CONSENT TEXT 2: TİCARİ İLETİ GÖNDERİMİ */}
+              <div className="p-4 rounded-2xl bg-[#0D1527] border border-purple-500/30 space-y-2">
+                <label className="block text-xs font-bold text-purple-300">
+                  Form Tik Kutusu: "Elektronik Ticari İleti Gönderimine İlişkin Onay" Pop-Up Metni
+                </label>
+                <textarea
+                  rows={8}
+                  value={formData.consentCommercialText || ''}
+                  onChange={(e) => handleChange('consentCommercialText', e.target.value)}
+                  placeholder="Elektronik Ticari İleti Gönderimine İlişkin Onay Metni..."
+                  className="w-full bg-[#080D1A] border border-purple-500/30 rounded-xl p-3 text-white focus:outline-none focus:border-purple-500 resize-none font-sans text-xs"
+                ></textarea>
+              </div>
             </div>
           </div>
         )}
