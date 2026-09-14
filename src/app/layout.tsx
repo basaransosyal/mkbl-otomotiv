@@ -30,6 +30,9 @@ export const metadata: Metadata = {
   metadataBase: new URL(baseUrl),
   verification: {
     google: 'xvfBxviX8tw5rzOJuUGr42nw5tqFS9UhDv2v4wESFIc',
+    other: {
+      'facebook-domain-verification': ['y8azm4d5yzp6lx3g0fmxh4oenaiuft'],
+    },
   },
   title: {
     default: 'MKBL Otomotiv | Kepez Showroom & Elektrikli Araçlar',
@@ -170,6 +173,7 @@ export default async function RootLayout({
     <html lang="tr" className={`dark ${inter.variable} ${outfit.variable}`}>
       <head>
         <meta name="google-site-verification" content="xvfBxviX8tw5rzOJuUGr42nw5tqFS9UhDv2v4wESFIc" />
+        <meta name="facebook-domain-verification" content="y8azm4d5yzp6lx3g0fmxh4oenaiuft" />
         <TrackingScripts />
         <script
           type="application/ld+json"
