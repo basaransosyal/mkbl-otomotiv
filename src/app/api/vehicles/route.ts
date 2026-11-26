@@ -2,6 +2,9 @@ import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { getVehiclesStore, setVehiclesStore, Vehicle, normalizeVehiclePrice } from '@/lib/data';
 
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 export async function GET() {
   try {
     const dbVehicles = await prisma.vehicle.findMany({
