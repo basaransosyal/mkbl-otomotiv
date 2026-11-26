@@ -25,9 +25,28 @@ export interface CookiePreferences {
 
 const DEFAULT_PREFERENCES: CookiePreferences = {
   necessary: true,
-  analytics: true,
-  marketing: true,
-  functional: true,
+  analytics: false,
+  marketing: false,
+  functional: false,
+};
+
+const loadSavedPreferences = (): CookiePreferences => {
+  try {
+    const savedConsent = localStorage.getItem('mkbl_cookie_consent');
+    if (savedConsent) {
+      const parsed = JSON.parse(savedConsent);
+      if (parsed?.preferences) {
+        return {
+          ...DEFAULT_PREFERENCES,
+          ...parsed.preferences,
+          necessary: true,
+        };
+      }
+    }
+  } catch (e) {
+    // Ignore storage/parse errors and fall back to defaults
+  }
+  return DEFAULT_PREFERENCES;
 };
 
 export default function CookieConsentBanner() {
@@ -60,10 +79,7 @@ export default function CookieConsentBanner() {
           setIsSlideIn(true);
         }, 5000);
       } else {
-        const parsed = JSON.parse(savedConsent);
-        if (parsed.preferences) {
-          setPreferences(parsed.preferences);
-        }
+        setPreferences(loadSavedPreferences());
         setIsVisible(false);
         setIsSlideIn(false);
       }
@@ -76,6 +92,7 @@ export default function CookieConsentBanner() {
 
     // Event listener for opening cookie settings from Footer or anywhere
     const handleOpenSettings = () => {
+      setPreferences(loadSavedPreferences());
       setIsVisible(true);
       setIsSlideIn(true);
       setIsPreferencesModalOpen(true);
@@ -190,7 +207,10 @@ export default function CookieConsentBanner() {
 
             {/* Cookie Settings Button */}
             <button
-              onClick={() => setIsPreferencesModalOpen(true)}
+              onClick={() => {
+                setPreferences(loadSavedPreferences());
+                setIsPreferencesModalOpen(true);
+              }}
               className="px-4 py-2.5 rounded-xl bg-white/5 hover:bg-white/10 text-gray-200 border border-blue-500/30 text-xs font-bold transition-all flex items-center space-x-1.5"
             >
               <Sliders className="w-3.5 h-3.5 text-blue-400" />
@@ -224,7 +244,10 @@ export default function CookieConsentBanner() {
                 </div>
               </div>
               <button
-                onClick={() => setIsPreferencesModalOpen(false)}
+                onClick={() => {
+                  setPreferences(loadSavedPreferences());
+                  setIsPreferencesModalOpen(false);
+                }}
                 className="p-1.5 text-gray-400 hover:text-white rounded-xl hover:bg-white/5"
               >
                 <X className="w-5 h-5" />
